@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "limits": "cpp",
+        "*.tcc": "cpp",
+        "bitset": "cpp",
+        "complex": "cpp",
+        "iomanip": "cpp",
+        "ostream": "cpp",
+        "system_error": "cpp",
+        "thread": "cpp",
+        "valarray": "cpp"
+    }
+}
