@@ -5,6 +5,7 @@ using namespace std;
 #define ll long long
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
 #define loop(i,n)  for(ll i=0; i<n; i++)
+#define loop1(i,n)  for(ll i=1; i<=n; i++)
 
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
@@ -13,11 +14,12 @@ using namespace std;
 
 #define mp make_pair
 #define pb push_back
-#define f first
-#define s second
+#define F first
+#define S second
 
 
 #define inf (int)1e9
+#define infll 1e18
 #define eps 1e-9
 #define PI 3.1415926535897932384626433832795
 #define mod 1000000007
@@ -43,6 +45,10 @@ typedef map<ll,ll> mll;
 typedef set<ll> sl;
 
 
+int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +62,9 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+
+    }
 }
 
 
@@ -64,4 +72,9 @@ int main(){
 
 // 
 
+
+
 */
+
+
+

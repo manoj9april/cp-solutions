@@ -56,20 +56,6 @@ int main(){
 	#endif
     fast
 
-    ll n; cin>>n;
-    ll b[n];
-    loop(i,n) cin>>b[i];
-
-    map<ll, ll> fre;
-
-    loop(i,n){
-        fre[b[i]-i] += b[i];
-    }
-    ll mx = 0;
-    for(auto ele: fre){
-        mx = max(mx, ele.second);
-    }
-    pt(mx);
     
 }
 
@@ -79,3 +65,6 @@ int main(){
 // 
 
 */
+
+
+

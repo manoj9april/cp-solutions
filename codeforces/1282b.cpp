@@ -56,21 +56,43 @@ int main(){
 	#endif
     fast
 
-    ll n; cin>>n;
-    ll b[n];
-    loop(i,n) cin>>b[i];
+    test{
+        ll n,p,k;
+        cin>>n>>p>>k;
 
-    map<ll, ll> fre;
+        ll a[n+1],dp[n+1],money[n+1];
+        for(int i=1; i<=n; i++) cin>>a[i];
+        sort(a+1,a+n+1);
+        dp[0]=0; money[0]=0; a[0]=0;
+        ll pre=0;
+        for(int i=1; i<=n; i++){
+            pre += a[i];
+            if(i<k){
+                if(pre<=p){
+                    dp[i]=i, money[i]=pre;
 
-    loop(i,n){
-        fre[b[i]-i] += b[i];
+                }
+                else {
+                    dp[i]= dp[i-1];
+                    money[i] = money[i-1];
+                }
+            }
+            else{
+                dp[i] = dp[i-1];
+                money[i] = money[i-1];
+                if(money[i-k] + a[i] <= p){
+                    if(dp[i-1]< dp[i-k]+k){
+                        dp[i] = dp[i-k]+k;
+                        money[i] = money[i-k] + a[i];
+                    }
+                }
+            }
+
+            // pt(dp[i]);
+        }
+
+        pt(dp[n]);
     }
-    ll mx = 0;
-    for(auto ele: fre){
-        mx = max(mx, ele.second);
-    }
-    pt(mx);
-    
 }
 
 
@@ -79,3 +101,6 @@ int main(){
 // 
 
 */
+
+
+

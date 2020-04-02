@@ -56,21 +56,22 @@ int main(){
 	#endif
     fast
 
-    ll n; cin>>n;
-    ll b[n];
-    loop(i,n) cin>>b[i];
+    test{
+        ll n; cin>>n;
+        ll sum=0,a[n],ok=true;
+        for(int i=0; i<n; i++){
+            cin>>a[i];
+            sum += a[i];
+        }
+        ll s=0;
+        loop(i,n){
+            if(s>=sum) {ok=false;break;}
+            s += a[i];
+            if(s<=0) {ok=false;break;}
+        }
 
-    map<ll, ll> fre;
-
-    loop(i,n){
-        fre[b[i]-i] += b[i];
+        cout<<(ok?"YES\n":"NO\n");
     }
-    ll mx = 0;
-    for(auto ele: fre){
-        mx = max(mx, ele.second);
-    }
-    pt(mx);
-    
 }
 
 
@@ -79,3 +80,6 @@ int main(){
 // 
 
 */
+
+
+

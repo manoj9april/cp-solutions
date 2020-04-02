@@ -48,29 +48,49 @@ typedef set<ll> sl;
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
+ll a,b,p,n;
+string s;
+
+// ll dp[lmt];
+bool check(ll mid){
+    // dp[mid]=0;
+    ll sum=(s[mid]=='A'? a:b);
+    bool ok=false;
+    for(int i=mid+1; i<n; i++){
+        if(s[i]!=s[i-1]){
+            sum += (s[i]=='A'? a:b);
+            // pt(sum);
+            // ok=true;
+        }
+    }
+    if(s[n-1]!=s[n-2]) sum -= (s[n-1]=='A'? a:b);
+    // if(mid<n-1)sum += (s[mid]=='A'? a:b);
+
+    return (sum<=p);
+}
 
 int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-	#endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("../input.txt", "r", stdin);
+    // freopen("../output.txt", "w", stdout);
+	// #endif
     fast
 
-    ll n; cin>>n;
-    ll b[n];
-    loop(i,n) cin>>b[i];
+    test{
+        cin>>a>>b>>p;
+        cin>>s;
+        n = s.length();
+        // pt("new case");
+        ll lo=0,hi=n-1,mid;
+        while(lo<=hi){
+            mid = lo + (hi - lo)/2;
 
-    map<ll, ll> fre;
-
-    loop(i,n){
-        fre[b[i]-i] += b[i];
+            if(check(mid)) hi=mid-1;
+            else lo = mid+1;
+        }
+        if(lo==n)lo=n-1;
+        cout<<lo+1<<"\n";
     }
-    ll mx = 0;
-    for(auto ele: fre){
-        mx = max(mx, ele.second);
-    }
-    pt(mx);
-    
 }
 
 

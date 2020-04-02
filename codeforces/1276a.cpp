@@ -56,21 +56,42 @@ int main(){
 	#endif
     fast
 
-    ll n; cin>>n;
-    ll b[n];
-    loop(i,n) cin>>b[i];
+    string s;
+    ll n;
+    test{
+        cin>>s;
+        n = s.length();
+        if(n<=2){
+            pt(0); continue;
+        }
+        int dp[n+1];
+        dp[0]=dp[1]=dp[2]=0;
+        int mark[n+1]={0};
+        for(int i=3; i<=n; i++){
+            if(s[i-1]=='o' && s.substr(i-3,3)=="two"){
+                dp[i]=dp[i-3]+1;
+                mark[i-1]=1;
+            }else if(s[i-1]=='e'){
+                if(i>=5 && s.substr(i-5,5)=="twone"){
+                    dp[i] = dp[i-5]+1;
+                    mark[i-2]=1;
+                    mark[i-3]=0;
+                }
+                else if(s.substr(i-3,3)=="one"){
+                    dp[i] = dp[i-3]+1;
+                    mark[i-1]=1;
+                }else dp[i]=dp[i-1];
+            }else{
+                dp[i] = dp[i-1];
+            }
+        }
 
-    map<ll, ll> fre;
-
-    loop(i,n){
-        fre[b[i]-i] += b[i];
+        pt(dp[n]);
+        for(int i=1; i<=n; i++){
+            if(mark[i])cout<<i<<" ";
+        }
+        pt("");
     }
-    ll mx = 0;
-    for(auto ele: fre){
-        mx = max(mx, ele.second);
-    }
-    pt(mx);
-    
 }
 
 
@@ -79,3 +100,6 @@ int main(){
 // 
 
 */
+
+
+
