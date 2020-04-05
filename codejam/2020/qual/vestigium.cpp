@@ -57,13 +57,49 @@ int const lmt=1e5+5;
 
 int main(){
     #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
+    freopen("../../../input.txt", "r", stdin);
+    freopen("../../../output.txt", "w", stdout);
 	#endif
     fast
-
+    int T=1;
     test{
 
+        ll n; cin>>n;
+        int a[n][n];
+        ll trace =0;
+        loop(i,n){
+            loop(j,n) cin>>a[i][j];
+
+            trace += a[i][i];
+        }
+        int r=0;
+        loop(i,n){
+            map<int, int> fre;
+            loop(j,n){
+                if(exist(fre,a[i][j])){
+                    r++; break;
+                }else{
+                    fre[a[i][j]]=1;
+                }
+            }
+        }
+        
+        int c=0;
+        loop(j,n){
+            map<int, int> fre;
+            loop(i,n){
+                if(exist(fre,a[i][j])){
+                    c++; break;
+                }else{
+                    fre[a[i][j]]=1;
+                }
+            }
+        }
+        cout<< "Case #" << T++ << ": ";
+        
+        cout<<trace<<" "<<r<<" "<<c;
+
+        cout<<"\n";
     }
 }
 

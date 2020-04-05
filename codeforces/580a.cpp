@@ -9,8 +9,8 @@ using namespace std;
 
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
-#define dbg(x)  cout << #x << " is " << x << endl
-#define pt(x) cout<<x<<"\n"
+#define dbg(x)  cout << #x << " is " << x << endl;
+#define pt(x) cout<<x<<"\n";
 
 #define mp make_pair
 #define pb push_back
@@ -62,9 +62,20 @@ int main(){
 	#endif
     fast
 
-    test{
-
+    ll n; cin>>n;
+    int a[n+1];
+    loop(i,n)cin>>a[i];
+    ll lm=1, gm=1;
+    a[n]=0;
+    loop1(i,n){
+        if(a[i]>=a[i-1]){
+            lm++;
+        }else{
+            gm = max(gm, lm);
+            lm=1;
+        }
     }
+    pt(gm);
 }
 
 

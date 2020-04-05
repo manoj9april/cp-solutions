@@ -62,9 +62,35 @@ int main(){
 	#endif
     fast
 
-    test{
+    ll n,k,x; cin>>n>>k>>x;
 
+    ll a[n+1];
+
+    ll mx=-1,idx=-1;
+    loop1(i,n){
+        cin>>a[i];
     }
+    sort(a+1, a+n+1);
+
+    ll dp[n+1][k+1];
+    
+    ll powx[k+1];
+    powx[0]=1;
+    loop1(i,k) powx[i] = powx[i-1]*x;
+
+    for(int i=0; i<=n; i++){
+        for(int j=0; j<=k; j++){
+            ll &mx= dp[i][j];
+            mx=-1;
+            if(i==0) { mx=0; continue; }
+            
+            for(int p=0; p<=j; p++){
+                mx = max(mx, dp[i-1][j-p] | (a[i]*powx[p]) );
+            }
+        }
+    }
+
+    pt(dp[n][k]);
 }
 
 

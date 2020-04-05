@@ -62,9 +62,16 @@ int main(){
 	#endif
     fast
 
-    test{
-
+    ll n; cin>>n;
+    ll ans = sqrt(2*n);
+    while(1){
+        if(ans*(ans+1) > 2*n) break;
+        ans++;
     }
+    pt(ans-1);
+    ll sum=0;
+    for(int i=1; i<ans-1; i++) cout<<i<<" ", sum+=i;
+    pt(n - sum);
 }
 
 

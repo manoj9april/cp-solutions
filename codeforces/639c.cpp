@@ -62,8 +62,23 @@ int main(){
 	#endif
     fast
 
-    test{
+    ll n,k; cin>>n>>k;
 
+    ll a[n+1];
+    ll eq=0,res=1;
+    loop(i,n+1){
+        cin>>a[i];
+        eq += a[i]*res;
+
+        res *= 2ll;
+    }
+    
+    ll ans=0;
+    // ll res=1;
+    loop(i,n+1){
+
+
+        res *= 2ll;
     }
 }
 

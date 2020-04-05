@@ -52,18 +52,61 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=1e3+5;
 
+int s[lmt],e[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
+    freopen("../../../input.txt", "r", stdin);
+    freopen("../../../output.txt", "w", stdout);
 	#endif
     fast
-
+    int T=1;
     test{
 
+        vector< pair< int , pii > > v;
+        ll n; cin>>n;
+        char act[n];
+        loop(i,n){
+            cin>>s[i]>>e[i];
+            // ind[i]=i; 
+            v.pb({s[i],{1,i}});
+            v.pb({e[i],{0,i}});
+        }
+        sort(all(v));
+        // sort(ind, ind+n, cmp);
+
+        int ac=0,ok=1,c=0,j=0;
+        loop(i,2*n){
+            if(v[i].S.F == 1){ //start
+                if(c==0){
+                    act[ v[i].S.S ] = 'C';
+                    c=1; 
+                }else if(j==0){
+                    act[ v[i].S.S ] = 'J';
+                    j=1; 
+                }
+                ac++;
+            }else{
+                int idx = v[i].S.S;
+                if(act[idx] == 'C') c=0;
+                else j=0;
+                ac--;
+            }
+            if(ac>2){
+                ok=0; break;
+            }
+        }
+        
+
+        cout<< "Case #" << T++ << ": ";
+        
+        if(!ok) cout<<"IMPOSSIBLE";
+        else{
+            loop(i,n) cout<<act[i];
+        }
+        cout<<"\n";
     }
 }
 

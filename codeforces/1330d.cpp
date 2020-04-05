@@ -61,9 +61,24 @@ int main(){
     freopen("../output.txt", "w", stdout);
 	#endif
     fast
+    ll po2[64];
+    po2[0]=1;
+    loop1(i,50) po2[i] = po2[i-1]*2ll;
 
+    
     test{
-
+        ll d,md;
+        cin>>d>>md;
+        
+        int idx=0;
+        while(po2[idx]<=d) idx++;
+        ll ans=1;
+        loop(i,idx){
+            ans *= ( min(d+1,po2[i+1])-po2[i]+1)%md;
+            ans %= md;
+            // pt(ans);
+        } 
+        pt((ans-1+md)%md);
     }
 }
 

@@ -57,13 +57,36 @@ int const lmt=1e5+5;
 
 int main(){
     #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
+    freopen("../../../input.txt", "r", stdin);
+    freopen("../../../output.txt", "w", stdout);
 	#endif
     fast
-
+    int T=1;
     test{
 
+        string s,ans=""; cin>>s;
+        int n = s.length();
+        int p=0;
+        int val;
+        loop(i,n){
+            val = s[i]-'0';
+            
+            while(p!=val){
+                ans += (p<val?'(':')');
+                p += (p<val?1:-1); 
+            }
+            ans += s[i];
+        }
+        val=0;
+        while(p!=val){
+            ans += (p<val?'(':')');
+            p += (p<val?1:-1); 
+        }
+        cout<< "Case #" << T++ << ": ";
+        
+        cout<<ans;
+
+        cout<<"\n";
     }
 }
 

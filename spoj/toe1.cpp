@@ -54,6 +54,66 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
+struct node{
+    int mat[3][3];
+};
+
+bool operator<(const node& t1, const node& t2) 
+{ 
+    return (t1.mat[0][0] < t2.mat[0][0]); 
+}
+
+map<node, int> vis;
+
+bool ok;
+
+bool done(int a[3][3]){
+
+    loop(i,3){
+        int sum=0;
+        loop(j,3){
+            sum += a[i][j];
+        }
+        if(abs(sum)==3) return true;
+    }
+
+    loop(j,3){
+        int sum=0;
+        loop(i,3){
+            sum += a[i][j];
+        }
+        if(abs(sum)==3) return true;
+    }
+    loop(i,2){
+        int sum=0;
+        loop(j,3){
+            sum += a[j][j + i*(j+2)%3];
+        }
+        if(abs(sum)==3) return true;
+    }
+    return false;
+}
+
+void dfs(node p, int val){
+    if(ok)return;
+    if(exist(vis,p) && vis[p]==2){
+        ok = 1; return;
+    }
+    vis[p]=1;
+    if(done(p.mat)) return;
+
+    loop(i,3){
+        loop(j,3){
+            if(p.mat[i][j]==0){
+                p.mat[i][j]=-val;
+                if(!exist(vis,p) || vis[p]==2){
+                    dfs(p, -val);
+                }
+                p.mat[i][j]=0;
+            }
+        }
+    }
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -61,9 +121,28 @@ int main(){
     freopen("../output.txt", "w", stdout);
 	#endif
     fast
-
+    string s;
     test{
+        node a,b;
+        loop(i,3){
+            cin>>s;
+            loop(j,3){
+                int val;
+                switch(s[j]){
+                    case 'O': val=-1; break;
+                    case 'X': val=1; break;
+                    default : val=0;
+                }
+                a.mat[i][j] = val;
+                b.mat[i][j]=0;
+            }
+        }
 
+        ok=false;
+        vis[a]=2;
+        dfs(b,-1);
+        
+        cout<<(ok?"yes":"no")<<"\n";
     }
 }
 

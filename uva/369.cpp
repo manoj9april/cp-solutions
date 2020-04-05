@@ -62,7 +62,29 @@ int main(){
 	#endif
     fast
 
-    test{
+    ll n,m;
+
+    ll c[101][101];
+
+    loop(i,101){
+        loop(j,101){
+            ll &ret = c[i][j];
+            if(j>i) ret = 0;
+            else if(i==0) ret = 1;
+            else if(j==0) ret = 1;
+            else{
+                ret = c[i-1][j-1] + c[i-1][j];
+            }
+        }
+    }
+
+
+
+    while(1){
+        cin>>n>>m;
+        if(n==0 && m==0) break;
+
+        cout<<n<<" things taken "<<m<<" at a time is "<<c[n][m]<<" exactly.\n";
 
     }
 }

@@ -54,16 +54,30 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
+ll be(ll a, ll n, ll m){
+    a = a%m;
+    ll ans=1;
+    while(n){
+        if(n&1) ans = (ans*a)%m;
+
+        a = (a*a)%m;
+        n = n/2;
+    }
+    return ans;
+}
 
 int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-	#endif
-    fast
+    // #ifndef ONLINE_JUDGE
+    // freopen("../input.txt", "r", stdin);
+    // freopen("../output.txt", "w", stdout);
+	// #endif
+    // fast
 
-    test{
+    ll a,b,m;
 
+    while(cin>>a){
+        cin>>b>>m;
+        pt( be(a,b,m) );
     }
 }
 

@@ -57,13 +57,19 @@ int const lmt=1e5+5;
 
 int main(){
     #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
+    freopen("../../../input.txt", "r", stdin);
+    freopen("../../../output.txt", "w", stdout);
 	#endif
     fast
-
+    int T=1;
     test{
 
+        
+        cout<< "Case #" << T++ << ": ";
+        
+
+
+        cout<<"\n";
     }
 }
 

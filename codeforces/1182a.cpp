@@ -62,8 +62,12 @@ int main(){
 	#endif
     fast
 
-    test{
+    cout<<fixed<<setprecision(0);
+    ll n; cin>>n;
 
+    if(n%2) pt(0);
+    else{
+        pt(pow(2,n/2));
     }
 }
 

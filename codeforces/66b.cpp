@@ -62,9 +62,29 @@ int main(){
 	#endif
     fast
 
-    test{
+    ll n; cin>>n;
+    ll a[n+1],left[n+1];
 
+    loop1(i,n) cin>>a[i];
+    a[0]=0;left[0]=0;
+    ll cnt=0;
+    loop1(i,n){
+        if(a[i]>=a[i-1])cnt++;
+        else cnt=1;
+
+        left[i]=cnt;
     }
+
+    cnt=0;
+    ll ans=left[n];
+    for(int i=n-1; i>=1; i--){
+        if(a[i]>=a[i+1])cnt++;
+        else cnt=0;
+
+        ans = max(ans,cnt+left[i]);
+    }
+    pt(ans);
+
 }
 
 
