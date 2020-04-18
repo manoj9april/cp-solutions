@@ -55,17 +55,60 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
+vi adj[lmt];
+int dis[lmt],mark[lmt],deg[lmt];
+int vis[lmt];
 
+void dfs(int p){
+	vis[p]=1;
+	for(int c:adj[p]){
+		if(!vis[c]){
+			dis[c]=dis[p]+1;
+			dfs(c);
+		}
+	}
+}
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
     ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    ll a,b;
+
+    loop(i,n-1){
+    	cin>>a>>b;
+    	a--; b--;
+    	adj[a].pb(b);
+    	adj[b].pb(a);
+    	deg[a]++; deg[b]++;
+    }
+    int rt=0;
+    while(deg[rt]>1)rt++;
+    dis[rt]=0;
+    dfs(rt);
+
+    ini(mark,0);
+
+    int ans = n-1,mn=1; 
+    loop(i,n){
+    	if(deg[i]==1){
+    		int c = adj[i][0];
+    		mark[c]=1;
+    		ans--;
+    		if(i!=rt && dis[i]%2)mn=3;
+    	}
+    }
+    loop(i,n){
+    	// pts(mark[i]);
+    	if(mark[i]) ans++;
+    }
+    // pt("");
+    pts(mn);
+    pt(ans);
+
 }
 
 
@@ -73,7 +116,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

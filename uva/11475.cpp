@@ -11,7 +11,6 @@ using namespace std;
 #define exist(s,e)  (s.find(e)!=s.end())
 #define dbg(x)  cout << #x << " is " << x << endl
 #define pt(x) cout<<x<<"\n"
-#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
@@ -55,17 +54,67 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
+int d1[lmt], d2[lmt];
+string s;
+
+void manacher(){
+
+    int l=0,r=-1,n=s.length();
+    for(int i=0; i<n; i++){
+
+        int k = (i>r?1:min(d1[l+r-i], r-i+1));
+
+        while(i-k>=0 && i+k<n && s[i-k]==s[i+k]) k++;
+
+        d1[i]=k--;
+
+        if(i+k>r){
+            r = i+k;
+            l = i-k;
+        }
+    }
+
+    l=0,r=-1,n=s.length();
+    for(int i=0; i<n; i++){
+
+        int k = (i>r?0:min(d2[l+r-i+1], r-i+1));
+
+        while(i-k-1>=0 && i+k<n && s[i-k-1]==s[i+k]) k++;
+
+        d2[i]=k--;
+
+        if(i+k>r){
+            r = i+k;
+            l = i-k-1;
+        }
+    }
+}
+
+
 
 int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-    #endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("../input.txt", "r", stdin);
+    // freopen("../output.txt", "w", stdout);
+	// #endif
     fast
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    while(cin>>s){
+        
+        manacher();
+        int n = s.length();
+        int lo=n-1;
+        for(int i=n-1; i>=0; i--){
+            if(i+d1[i]==n) lo = min(lo,i-d1[i]+1);
+            if(i+d2[i]==n) lo = min(lo,i-d2[i]);
+            // cout<<d1[i]<<" ";
+        }
+        // pt("");
+
+        string ans = s.substr(0,lo);
+        reverse(all(ans));
+        pt(s+ans);
+    }
 }
 
 
@@ -73,7 +122,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

@@ -11,7 +11,6 @@ using namespace std;
 #define exist(s,e)  (s.find(e)!=s.end())
 #define dbg(x)  cout << #x << " is " << x << endl
 #define pt(x) cout<<x<<"\n"
-#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
@@ -55,17 +54,40 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
+int d1[lmt], d2[lmt];
+string s;
+
+int kmp( string str){
+    
+    int len = str.length(), j=0;
+    int f[len];
+    f[0]=0;
+    for(int i=1; i<len; i++){
+
+        while(j>0 && str[i]!=str[j]){
+            j = f[j-1];
+        }
+        
+        if(str[i]==str[j])++j;
+        f[i]=j;
+    }
+    return f[len-1];
+}
+
 
 int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-    #endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("../input.txt", "r", stdin);
+    // freopen("../output.txt", "w", stdout);
+	// #endif
     fast
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    while(cin>>s){
+        string r = s;
+        reverse(all(r));
+        int idx = kmp(r+'#'+s);
+        pt(s+r.substr(idx));
+    }
 }
 
 
@@ -73,7 +95,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

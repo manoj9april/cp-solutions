@@ -11,7 +11,6 @@ using namespace std;
 #define exist(s,e)  (s.find(e)!=s.end())
 #define dbg(x)  cout << #x << " is " << x << endl
 #define pt(x) cout<<x<<"\n"
-#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
@@ -56,27 +55,9 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 int const lmt=1e5+5;
 
 
-int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-    #endif
-    fast
-
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
-}
-
-
-/*
-
-// 
-
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
-
-
-*/
-
-
-
+class MostFrequentLastDigit {
+	public:
+	vector <int> generate(int n, int d) {
+		
+	}
+};

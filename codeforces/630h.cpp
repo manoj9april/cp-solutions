@@ -11,7 +11,6 @@ using namespace std;
 #define exist(s,e)  (s.find(e)!=s.end())
 #define dbg(x)  cout << #x << " is " << x << endl
 #define pt(x) cout<<x<<"\n"
-#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
@@ -60,12 +59,19 @@ int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
-    fast
-
+	#endif
+    
     ll n; cin>>n;
-    vi v;
-    int k = v.size()
+
+    ll ans=1,den=120,g;
+    loop(i,5){
+        ans *= (n-i)*(n-i);
+        g = __gcd(den,ans);
+        ans /= g;
+        den /= g;
+    }
+
+    pt(ans);
 }
 
 
@@ -73,7 +79,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

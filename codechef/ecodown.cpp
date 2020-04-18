@@ -23,7 +23,7 @@ using namespace std;
 #define infll 1e18
 #define eps 1e-9
 #define PI 3.1415926535897932384626433832795
-#define mod 1000000007
+#define mod 1000000006
 
 
 #define fast    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
@@ -82,12 +82,51 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //================================================================//
 
 
-
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
+ll const m = 1e9+7;
+ll a,b,n;
+int const N =2;
 
+ll tem[N][N],res[N][N],in[N][N];
+int x=2;
+void matpow(ll g[N][N], int ex){
+	int i, j, k;
+	if (ex == 1) return ;
+	loop(i, x) loop(j, x) tem[i][j] = g[i][j];	
+	matpow(g, ex/2);
+	loop(i, x) loop(j, x) { res[i][j] = 0; loop(k, x) res[i][j] += g[i][k]*g[k][j]%mod;}
+	loop(i, x) loop(j, x) res[i][j] %= mod;
+	if (ex&1){
+		loop(i, x) loop(j, x) { g[i][j] = 0; loop(k, x) g[i][j] += res[i][k]*tem[k][j]%mod;}
+		loop(i, x) loop(j, x) g[i][j] %= mod;
+	}
+	else
+		loop(i, x) loop(j, x) g[i][j] = res[i][j];
+}
+
+
+ll fib(ll n){
+	in[0][0] = 1;
+	in[0][1] = 1;
+	in[1][0] = 1;
+	in[1][1] = 0;	
+	matpow(in,n);
+	return in[0][1]%mod;
+}
+
+ll be(ll a, ll n){
+	ll ans=1;
+	while(n){
+		if(n&1) ans = (ans*a)%m;
+
+		a = (a*a)%m;
+		n = n/2;
+	}
+	return ans;
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -95,9 +134,25 @@ int main(){
     freopen("../output.txt", "w", stdout);
 	#endif
     fast
-
+    
     test{
-    	
+    	// a=1, b=0
+		cin>>b>>a>>n;
+		if(n==0)pt(b);
+		else if(n==1) pt(a);
+		else{
+			a++; b++;
+
+			ll fn = fib(n);
+			ll fn_1 = fib(n-1);
+			debug(fn, fn_1);
+			ll ans = be(a,fn);
+			ans *= be(b,fn_1);
+			ans = (ans-1+m)%m;
+
+
+			pt(ans);
+		}
     }
 }
 

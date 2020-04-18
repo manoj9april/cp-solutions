@@ -55,17 +55,51 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
+int fre[20][20];
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
+    ll n,m,k; cin>>n>>m>>k;
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    int val[n];
+    loop(i,n) cin>>val[i];
+
+    ll a,b,c;
+    loop(i,k){
+        cin>>a>>b>>c;
+        a--;b--;
+        fre[a][b]=c;
+    }
+
+    ll dp[1<<n][n];
+
+    
+    ini(dp,0);
+    ll ans=0;
+
+    loop(i,n)dp[1<<i][i]=val[i];
+
+    loop(num,1<<n){
+        if(__builtin_popcount(num)>m) {continue;}
+        loop(i,n){
+            ll &ret = dp[num][i];
+            if(num & (1<<i)){
+                
+                ll nnum = (num^(1<<i));
+                loop(j,n){
+                    if(nnum & (1<<j))
+                        ret = max(ret, dp[nnum][j] + val[i]  + fre[j][i]);
+                }
+            }
+            if(__builtin_popcount(num)== m)
+                ans = max(ret,ans);
+        }
+    }
+    pt(ans);
 }
 
 
@@ -73,7 +107,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

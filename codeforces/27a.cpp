@@ -53,19 +53,27 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=1e4+5;
 
+int a[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
     ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    ll ele;
+    loop(i,n){
+        cin>>ele; a[ele]=1;
+    }
+    loop1(i,lmt){
+        if(!a[i]){
+            pt(i); break;
+        }
+    }
 }
 
 
@@ -73,7 +81,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

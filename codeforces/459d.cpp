@@ -53,19 +53,93 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=1e6+5;
+
+int tree[4*lmt];
+
+
+void update(int node, int start, int end, int idx, int val){
+    if(start==end){
+        tree[node]+=val;
+    }
+    else{
+        int mid = (start+end)/2;
+        if(idx>=start  && idx<=mid){
+            update(2*node,start,mid,idx,val);
+        }else{
+            update(2*node +1,mid+1,end,idx,val);
+        }
+        
+        tree[node]=(tree[2*node]+tree[2*node+1]);
+    }
+}
+
+int query(int node, int start, int end, int l, int r){
+    if(l>end || r<start) return 0;
+    else if(start>=l && end<=r){
+        return tree[node];
+    }else{
+        int mid = (start+end)/2;
+        int a =  query(2*node,start,mid,l,r);
+        int b =  query(2*node +1,mid+1,end,l,r);
+        return (a+b);
+    }
+}
 
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
     ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    ll a[n];
+    // mii occ;
+
+    loop(i,n){
+        cin>>a[i];
+        // occ[a[i]]=1;
+    }
+
+    // int idx=1;
+    // for(auto &c: occ){
+    //     c.S = idx++;
+    //     // dbg(c.F);
+    //     // dbg(c.S);
+
+    // }
+
+    // loop(i,n){
+    //     // dbg(a[i]);
+    //     a[i]=occ[a[i]];
+    //     // dbg(a[i]);
+    // }
+
+    // left to right
+    mii fre,rfre;
+    int lr[n],rl[n];
+    loop(i,n){
+        fre[a[i]]++;
+        lr[i] = fre[a[i]];
+
+        rfre[a[n-1-i]]++;
+        rl[n-1-i] = rfre[a[n-1-i]];
+        // pts(lr[i]);
+    }
+    // pt("");
+
+    ll ans=0;
+    for(int i=n-1; i>=0; i--){
+        // pts(rl[n-1-i]);
+        ans += query(1,1,lmt,0,lr[i]-1);
+
+        update(1,1,lmt,rl[i],1);
+    }
+    // pt("");
+    pt(ans);
+
 }
 
 
@@ -73,7 +147,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

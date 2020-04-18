@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define ll long long
+#define ll int
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
 #define loop(i,n)  for(ll i=0; i<n; i++)
 #define loop1(i,n)  for(ll i=1; i<=n; i++)
@@ -86,9 +86,43 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=3e2+5;
+int const N = lmt;
+int x =lmt;
 
+ll adj[lmt][lmt],g[lmt][lmt];
+ll tem[N][N],res[N][N];
 
+void matexpo(ll g[N][N], ll ex){
+	int i, j, k;
+	if (ex == 1) return ;
+	loop(i,x) loop(j,x) tem[i][j]=-inf;
+    loop(i,x) tem[i][i]=0;
+
+	while(ex){
+		if(ex&1){
+			loop(i, x) loop(j, x) { res[i][j] = -inf; loop(k, x) res[i][j] = max(res[i][j],tem[i][k]+g[k][j]);}
+			loop(i, x) loop(j, x) tem[i][j] = (res[i][j]);
+		}
+		// g= g*g
+		loop(i, x) loop(j, x) { res[i][j] = -inf; loop(k, x) res[i][j] = max(res[i][j],g[i][k]+g[k][j]);}
+		loop(i, x) loop(j, x) g[i][j] = (res[i][j]);
+
+		ex = ex/2;
+
+	}
+	loop(i, x) loop(j, x) g[i][j] = (tem[i][j]);
+
+}
+
+bool cycle(ll k){
+	loop(i,lmt) loop(j,lmt) g[i][j] = adj[i][j];
+	matexpo(g,k);
+
+	loop1(i,lmt-1)if(g[i][i]>0) return true;
+
+	return false;
+}
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
@@ -96,9 +130,27 @@ int main(){
 	#endif
     fast
 
-    test{
-    	
+    ll n,m;
+    cin>>n>>m;
+    x=n;
+    int xx,yy;
+    loop(i,x) loop(j,x) adj[i][j]=-inf;
+    loop(i,x) adj[i][i]=0;
+    loop(i,m){
+    	cin>>xx>>yy;
+    	xx--; yy--;
+    	cin>>adj[xx][yy]>>adj[yy][xx];
     }
+
+    ll lo=1,hi=n,mid;
+    while(lo<=hi){
+    	mid = lo + (hi-lo)/2;
+
+    	if(cycle(mid)) hi=mid-1;
+    	else lo = mid+1;
+    }
+
+    pt((lo<=n? lo : 0));
 }
 
 

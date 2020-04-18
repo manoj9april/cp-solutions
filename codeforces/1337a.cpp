@@ -9,7 +9,7 @@ using namespace std;
 
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
-#define dbg(x)  cout << #x << " is " << x << endl
+#define dbg(x)  cout << #x << " = " << x << endl
 #define pt(x) cout<<x<<"\n"
 #define pts(x) cout<<x<<" "
 
@@ -50,6 +50,39 @@ int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
 int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 
+
+//===========================DEBUG======================//
+#define XOX
+vector<string> vec_splitter(string s) {
+	s += ',';
+	vector<string> res;
+	while(!s.empty()) {
+		res.push_back(s.substr(0, s.find(',')));
+		s = s.substr(s.find(',') + 1);
+	}
+	return res;
+}
+void debug_out(
+vector<string> __attribute__ ((unused)) args,
+__attribute__ ((unused)) int idx, 
+__attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
+template <typename Head, typename... Tail>
+void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
+	if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+	stringstream ss; ss << H;
+	cerr << args[idx] << " = " << ss.str();
+	debug_out(args, idx + 1, LINE_NUM, T...);
+}
+#ifdef XOX
+#define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
+#else
+#define debug(...) 42
+#endif
+
+//================================================================//
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -60,12 +93,14 @@ int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
     ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    int a=8;
+    int b = 3;
+
+    debug(n,a,b);
 }
 
 
@@ -73,7 +108,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

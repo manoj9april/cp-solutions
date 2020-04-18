@@ -56,27 +56,37 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 int const lmt=1e5+5;
 
 
-int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-    #endif
-    fast
+class EllysAndXor {
+	public:
+	int getMax(vector <int> a) {
+		// ll ans = v[0];
+		int n = a.size();
+		ll ans=-1;
+		loop(i,1<<(n-1)){
+			ll cur = a[0];
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
-}
+			loop(j,n-1){
+				if( (i>>j)&1) cur ^= a[j+1];
+				else cur &= a[j+1];
+			}
+			ans = max(ans,cur);
+		}
 
+		return ans;
+	}
+};
 
-/*
+// int main(){
+// 	#ifndef ONLINE_JUDGE
+//     freopen("../input.txt", "r", stdin);
+//     freopen("../output.txt", "w", stdout);
+// 	#endif
 
-// 
+// 	EllysAndXor solver;
+// 	int n; cin>>n;
+// 	vector <int> numbers(n);
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
-
-
-*/
-
-
-
+// 	loop(i,n) cin>>numbers[i];
+// 	int ans = solver.getMax(numbers); 
+// 	pt(ans);
+// }

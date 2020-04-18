@@ -54,18 +54,78 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
+ll n,k;
+ll ans[lmt],vis[lmt],ind[lmt];
+pair< pii, int>  lvl[lmt]; // lvl , subtree, index
+vi adj[lmt];
 
+void dfs(int p){
+	vis[p]=1;
+	lvl[p].S = p;
+	lvl[p].F.S=1;
+	for(int c: adj[p]){
+		if(!vis[c]){
+			lvl[c].F.F = lvl[p].F.F - 1;
+			dfs(c);
+			lvl[p].F.S += lvl[p].F.S;
+		}
+	}
+}
+
+void inis(){
+	ini(vis,0);
+}
+
+void cal(int p){
+	vis[p]=1;
+
+	ans[p] = (ind[p]? 1:0);
+
+	for(int c:adj[p]){
+		if(!vis[c]){
+			cal(c);
+			ans[p] += ans[c];
+		}
+	}
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    ll n,k; cin>>n>>k;
+
+    ll a,b;
+    loop(i,n-1){
+    	cin>>a>>b;
+    	adj[a].pb(b);
+    	adj[b].pb(a);
+    }
+
+    lvl[1].F.F=0;
+    dfs(1); // lvltree
+
+    sort(lvl+1, lvl+n+1);
+
+    loop1(i,k){
+    	int idx = lvl[i].S;
+    	ind[idx] = 1;
+    }
+    inis();
+    cal(1);
+
+    ll res  =0;
+    loop1(i,n){
+    	if(!ind[i]) res += ans[i];
+
+    	// if(!ind[i])pts(ans[i]);
+    	// else pts("00");
+    }
+    // pts("sdbjb");
+    pt(res);
 }
 
 
@@ -73,7 +133,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

@@ -11,7 +11,6 @@ using namespace std;
 #define exist(s,e)  (s.find(e)!=s.end())
 #define dbg(x)  cout << #x << " is " << x << endl
 #define pt(x) cout<<x<<"\n"
-#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
@@ -53,19 +52,34 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=5e3+5;
 
+ll dp[lmt][2];
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    ll n,m,k; cin>>n>>m>>k;
+    ll a[n+1];
+    a[0]=0;
+    loop1(i,n) cin>>a[i], a[i]+=a[i-1];
+
+    int flag=0;
+    loop(kk,k+1){
+        loop(i,n+1){
+            ll &ret = dp[i][flag];
+            if(i<m || kk==0) ret = 0;
+            else{
+                ret = max(dp[i-1][flag], a[i]-a[i-m]+dp[i-m][1-flag]);
+            }
+        }
+        flag = 1-flag;
+    }
+    pt(dp[n][1-flag]);
 }
 
 
@@ -73,7 +87,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

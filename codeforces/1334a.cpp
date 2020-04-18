@@ -57,15 +57,36 @@ int const lmt=1e5+5;
 
 
 int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-    #endif
+    // #ifndef ONLINE_JUDGE
+    // freopen("../input.txt", "r", stdin);
+    // freopen("../output.txt", "w", stdout);
+	// #endif
     fast
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    test{
+        ll n; cin>>n;
+        int p[n],c[n];
+        loop(i,n) cin>>p[i]>>c[i];
+
+        bool ok=true;
+        loop(i,n){
+            if(p[i]<c[i]){
+                ok=0; break;
+                
+            }
+        }
+
+        loop1(i,n-1){
+            if(p[i]<p[i-1] || c[i]<c[i-1]){ok =0; break;}
+            int diffp = p[i]-p[i-1];
+            int diffc = c[i]-c[i-1];
+            if(diffp<diffc){
+                ok=0;
+                break;
+            }
+        }
+        pt((ok?"YES":"NO"));
+    }
 }
 
 
@@ -73,7 +94,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

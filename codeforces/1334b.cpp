@@ -60,12 +60,25 @@ int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    test{
+        ll n,x; cin>>n>>x;
+        ll a[n];
+        loop(i,n) cin>>a[i];
+        sort(a,a+n);
+        reverse(a,a+n);
+
+        ll sum=0,cnt=0;
+        loop(i,n){
+            sum+= a[i];
+            if( (sum/(cnt+1)) >= x)cnt++;
+            else break;
+        }
+
+        pt(cnt);
+    }
 }
 
 
@@ -73,7 +86,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

@@ -11,7 +11,6 @@ using namespace std;
 #define exist(s,e)  (s.find(e)!=s.end())
 #define dbg(x)  cout << #x << " is " << x << endl
 #define pt(x) cout<<x<<"\n"
-#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
@@ -53,19 +52,70 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=2e5+5;
 
+vi adj[lmt];
+int n,m,k;
+
+void bfs(int *dist, int p){
+
+    fill(dist+1,dist+n+1,inf);
+    
+    queue<int> q;
+    dist[p]=0;
+    q.push(p);
+
+    while(!q.empty()){
+        int pr = q.front(); q.pop();
+
+        for(int c: adj[pr]){
+            if(dist[c]==inf){
+                dist[c] = dist[pr]+1;
+                q.push(c);
+            }
+        }
+    }
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    cin>>n>>m>>k;
+    int sp[k];
+    loop(i,k) cin>>sp[i];
+    ll a,b;
+    loop(i,m){
+        cin>>a>>b;
+        adj[a].pb(b);
+        adj[b].pb(a);
+    }
+    int d1[n+1], dn[n+1];
+    bfs(d1, 1);
+    bfs(dn, n);
+
+    vpii v;
+    loop(i,k){
+        int x = d1[sp[i]];
+        int y = dn[sp[i]];
+        v.pb({x-y,sp[i]});
+    }
+
+    sort(all(v));
+
+    int ans=0,max_x=-inf;
+    loop(i,k){
+        int idx = v[i].S;
+        ans = max(ans, max_x + dn[idx]);
+        max_x = max(max_x, d1[idx]);
+    }
+    // loop1(i,n) cout<<dn[i]<<" ";
+    // pt("");
+    pt(min(d1[n],ans+1));
+
 }
 
 
@@ -73,7 +123,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */

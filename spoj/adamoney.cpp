@@ -52,7 +52,7 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 
 //===========================DEBUG======================//
-#define XOX 1
+// #define XOX 1
 vector<string> vec_splitter(string s) {
 	s += ',';
 	vector<string> res;
@@ -81,8 +81,49 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 
 //================================================================//
 
+int const N = 5,x=5;
 
+ll tem[N][N],res[N][N];
 
+void matexpo(ll g[N][N], ll ex){
+	int i, j, k;
+	if (ex == 1) return ;
+	ini(tem,0);
+	loop(i, x) tem[i][i]=1;
+
+	while(ex){
+		if(ex&1){
+			loop(i, x) loop(j, x) { res[i][j] = 0; loop(k, x) res[i][j] += tem[i][k]*g[k][j]%mod;}
+			loop(i, x) loop(j, x) tem[i][j] = (res[i][j]%mod);
+		}
+		// g= g*g
+		loop(i, x) loop(j, x) { res[i][j] = 0; loop(k, x) res[i][j] += g[i][k]*g[k][j]%mod;}
+		loop(i, x) loop(j, x) g[i][j] = (res[i][j]%mod);
+
+		ex = ex/2;
+
+	}
+	loop(i, x) loop(j, x) g[i][j] = (tem[i][j]%mod);
+
+}
+
+int d[5];
+ll fib(ll n){
+	ll g[5][5] = {
+					{1,1,0,0,0},
+					{2,0,1,0,0},
+					{0,0,0,1,0},
+					{5,0,0,0,1},
+					{1,0,0,0,0}
+				};
+
+	matexpo(g,n);
+	ll ans=0;
+	loop(i,5){
+		ans = (ans+ d[4-i]*g[i][0])%mod;
+	}
+	return ans;
+}
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -97,7 +138,13 @@ int main(){
     fast
 
     test{
-    	
+    	ll n;
+    	loop(i,5) cin>>d[i];
+    	cin>>n;
+    	if(n<5){
+    		pt(d[n]); continue;
+    	}
+    	pt(fib(n-4));
     }
 }
 

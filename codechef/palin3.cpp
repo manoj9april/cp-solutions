@@ -11,7 +11,6 @@ using namespace std;
 #define exist(s,e)  (s.find(e)!=s.end())
 #define dbg(x)  cout << #x << " is " << x << endl
 #define pt(x) cout<<x<<"\n"
-#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
@@ -56,16 +55,62 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 int const lmt=1e5+5;
 
 
+ll manacher(int* d1, int* d2, string s){
+
+    ll ans=0;
+    int l=0,r=-1,n=s.length();
+    int sum[n],good[n];
+    for(int i=0; i<n; i++){
+
+        int k = (i>r?1:min(d1[l+r-i], r-i+1));
+
+        if(i>r){
+            k=1;
+            sum[i]=s[i]-'0';
+            good[i]=1;
+        }else{
+            k = 
+        }
+
+        while(i-k>=0 && i+k<n && s[i-k]==s[i+k]) k++;
+
+        d1[i]=k--;
+
+        if(i+k>r){
+            r = i+k;
+            l = i-k;
+        }
+    }
+
+    l=0,r=-1,n=s.length();
+    for(int i=0; i<n; i++){
+
+        int k = (i>r?0:min(d2[l+r-i+1], r-i+1));
+
+        while(i-k-1>=0 && i+k<n && s[i-k-1]==s[i+k]) k++;
+
+        d2[i]=k--;
+
+        if(i+k>r){
+            r = i+k;
+            l = i-k-1;
+        }
+    }
+}
+
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
-    ll n; cin>>n;
-    vi v;
-    int k = v.size()
+    string s; cin>>s;
+    int n = s.length();
+    int d1[n],d2[n];
+
+    ll ans = manacher(d1,d2,s);
+    pt(ans);
 }
 
 
@@ -73,7 +118,6 @@ int main(){
 
 // 
 
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 
 
 */
