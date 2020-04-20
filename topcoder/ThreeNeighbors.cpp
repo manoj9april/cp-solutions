@@ -9,8 +9,9 @@ using namespace std;
 
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
-#define dbg(x)  cout << #x << " is " << x << endl
+#define dbg(x)  cout << #x << " = " << x << endl
 #define pt(x) cout<<x<<"\n"
+#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
@@ -55,14 +56,37 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 int const lmt=1e5+5;
 
 
-class RedDragonInn {
+class ThreeNeighbors {
 	public:
-	int maxGold(int n, int x) {
-		ll ans = n*x;
-		ans += n-1;
-		return (2*ans)+1;
-		int a;
-		
+	vector <string> construct(int N) {
+		int W=50;
+		string w="";
+		loop(i,W) w+= 'X';
+
+
+		vector<string> a(W, w);
+
+		ll cnt=N;
+		// int m = W,n=W,k=0,l=0,i;
+		int flag=0,idx=50;
+		loop(i,W){
+			loop(j,W){
+				if(!cnt){
+					for(int k=j; k<W; k++) a[i][k]='.';
+					if(i<W-1)for(int k=j+1; k<W; k++) a[i+1][k]='.';
+					idx=i+2;
+					flag=1;
+					break;
+				}
+				if( (i%4 == 1) || (i%4 == 2) ) {a[i][j]='.'; cnt--;}
+			}
+			if(flag) break;
+		}
+		while(idx<W){
+			loop(j,W) a[idx][j]='.';
+			idx++;
+		}
+		return a;
 	}
 };
 
@@ -72,8 +96,16 @@ class RedDragonInn {
 // 	freopen("../output.txt", "w", stdout);
 // 	#endif
 	
-// 	RedDragonInn solver;
-// 	int N, int X;
-	
-// 	int ans = solver.maxGold(int N, int X); 
+// 	ThreeNeighbors solver;
+// 	int N;
+// 	cin>>N;
+// 	vector <string> ans = solver.construct(N); 
+
+// 	int W=10;
+// 	loop(i,W){
+//     	loop(j,W){
+//     		cout<<ans[i][j];
+//     	}
+//     	pt("");
+//     }
 // }

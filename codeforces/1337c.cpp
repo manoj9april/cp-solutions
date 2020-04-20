@@ -9,7 +9,7 @@ using namespace std;
 
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
-#define dbg(x)  cout << #x << " is " << x << endl
+#define dbg(x)  cout << #x << " = " << x << endl
 #define pt(x) cout<<x<<"\n"
 #define pts(x) cout<<x<<" "
 
@@ -50,88 +50,91 @@ int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
 int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 
+
+//===========================DEBUG======================//
+#define XOX 1
+vector<string> vec_splitter(string s) {
+    s += ',';
+    vector<string> res;
+    while(!s.empty()) {
+        res.push_back(s.substr(0, s.find(',')));
+        s = s.substr(s.find(',') + 1);
+    }
+    return res;
+}
+void debug_out(
+vector<string> __attribute__ ((unused)) args,
+__attribute__ ((unused)) int idx, 
+__attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
+template <typename Head, typename... Tail>
+void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
+    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+    stringstream ss; ss << H;
+    cerr << args[idx] << " = " << ss.str();
+    debug_out(args, idx + 1, LINE_NUM, T...);
+}
+#ifdef XOX
+#define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
+#else
+#define debug(...) 42
+#endif
+
+//================================================================//
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=2e5+5;
 ll n,k;
-ll ans[lmt],vis[lmt],ind[lmt];
-pair< pii, int>  lvl[lmt]; // lvl , subtree, index
+ll vis[lmt],sub[lmt],h[lmt];
+// pii h[lmt];
 vi adj[lmt];
 
-void dfs(int p){
-	vis[p]=1;
-	lvl[p].S = p;
-	lvl[p].F.S=1;
-	for(int c: adj[p]){
-		if(!vis[c]){
-			lvl[c].F.F = lvl[p].F.F - 1;
-			dfs(c);
-			lvl[p].F.S += lvl[p].F.S;
-		}
-	}
-}
+void dfs(int p, int l){
+    vis[p]=1;
+    sub[p]=1;
+    // h[p].S = p;
+    for(int c: adj[p]){
+        if(!vis[c]){
+            dfs(c,l+1);
+            sub[p] += sub[c];
+        }
+    }
 
-void inis(){
-	ini(vis,0);
-}
-
-void cal(int p){
-	vis[p]=1;
-
-	ans[p] = (ind[p]? 1:0);
-
-	for(int c:adj[p]){
-		if(!vis[c]){
-			cal(c);
-			ans[p] += ans[c];
-		}
-	}
+    h[p] = sub[p]-l;
 }
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-	#endif
+    #endif
     fast
 
-    ll n,k; cin>>n>>k;
-
+    cin>>n>>k;
     ll a,b;
     loop(i,n-1){
-    	cin>>a>>b;
-    	adj[a].pb(b);
-    	adj[b].pb(a);
+        cin>>a>>b;
+        adj[a].pb(b);
+        adj[b].pb(a);
     }
 
-    lvl[1].F.F=0;
-    dfs(1); // lvltree
+    dfs(1,1);
+    
+    sort(h+1, h+n+1);
+    reverse(h+1, h+n+1);
 
-    sort(lvl+1, lvl+n+1);
+    ll ans=0;
 
-    loop1(i,k){
-    	int idx = lvl[i].S;
-    	ind[idx] = 1;
-    }
-    inis();
-    cal(1);
+    loop1(i,n-k) ans += h[i];
 
-    ll res  =0;
-    loop1(i,n){
-    	if(!ind[i]) res += ans[i];
-
-    	// if(!ind[i])pts(ans[i]);
-    	// else pts("00");
-    }
-    // pts("sdbjb");
-    pt(res);
+    pt(ans);
 }
 
 
 /*
-
-// 
 
 
 

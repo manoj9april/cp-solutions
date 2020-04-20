@@ -1,4 +1,6 @@
+ll const N,x;
 ll tem[N][N],res[N][N];
+
 void matpow(ll g[N][N], int ex){
 	int i, j, k;
 	if (ex == 1) return ;

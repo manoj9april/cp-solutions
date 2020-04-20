@@ -9,8 +9,9 @@ using namespace std;
 
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
-#define dbg(x)  cout << #x << " is " << x << endl
+#define dbg(x)  cout << #x << " = " << x << endl
 #define pt(x) cout<<x<<"\n"
+#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
@@ -54,15 +55,20 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
-
-class RedDragonInn {
+int a[lmt];
+class AveragePrice {
 	public:
-	int maxGold(int n, int x) {
-		ll ans = n*x;
-		ans += n-1;
-		return (2*ans)+1;
-		int a;
-		
+	double nonDuplicatedAverage(vector <int> p) {
+		int n = p.size();
+		loop(i,n){
+			a[p[i]]++;
+		}
+		ll sum=0,cnt=0;
+		loop(i,lmt){
+			if(a[i]) {sum+= i; cnt++;}
+		}
+
+		return (sum*1.0)/(cnt*1.0);
 	}
 };
 
@@ -72,8 +78,8 @@ class RedDragonInn {
 // 	freopen("../output.txt", "w", stdout);
 // 	#endif
 	
-// 	RedDragonInn solver;
-// 	int N, int X;
+// 	AveragePrice solver;
+// 	vector <int> prices;
 	
-// 	int ans = solver.maxGold(int N, int X); 
+// 	double ans = solver.nonDuplicatedAverage(vector <int> prices); 
 // }
