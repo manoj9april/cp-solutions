@@ -54,8 +54,7 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //===========================DEBUG======================//
 #define XOX 1
 vector<string> vec_splitter(string s) {
-	s += ',';
-	vector<string> res;
+	s += g	vector<string> res;
 	while(!s.empty()) {
 		res.push_back(s.substr(0, s.find(',')));
 		s = s.substr(s.find(',') + 1);
