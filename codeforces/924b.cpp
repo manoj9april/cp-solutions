@@ -86,32 +86,8 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=2e5+5;
-ll m,n,k,t;
-ll a[lmt],ind[lmt],l[lmt],r[lmt],d[lmt];
-
-bool cmp(int i, int j){
-    return l[i]<l[j];
-}
-
-bool check(ll val){
-	ll last=0,ans=0,idx;
-    loop(i,k){
-        idx = ind[i];
-        if(d[idx]<=val) continue;
-        
-        if(l[idx]<=last){
-            ans += max(0ll,r[idx]-last);
-            last = max(last,r[idx]);
-        }else{
-            ans += r[idx]-l[idx]+1;
-            last = r[idx];
-        }
-    }
-    ans = 2*ans + n+1;
-    return ans<=t;
-
-}
+int const lmt=1e5+5;
+ll a[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -120,25 +96,29 @@ int main(){
 	#endif
     fast
 
-    cin>>m>>n>>k>>t;
-
-    loop(i,m) cin>>a[i];
-    sort(a,a+m);
-
-    loop(i,k){
-    	cin>>l[i]>>r[i]>>d[i];
-        ind[i]=i;
-    }
-    sort(ind,ind+k,cmp);
-
-    ll lo=0,mid, hi=m-1;
-    while(lo<=hi){
-    	mid = lo + (hi-lo)/2;
-    	if(check(a[mid])) hi=mid-1;
-    	else lo = mid+1;
-    }
+    ll n,u; cin>>n>>u;
+    loop(i,n) cin>>a[i];
     
-    pt(m-lo);
+    ll r=2,num,den;
+    float cur,ans=0;
+    bool ok=false;
+    loop1(i,n-2){
+    	r = max(r,i+1);
+    	while(r<n && a[r]-a[i-1]<=u)r++;
+
+
+    	num = a[r-1]-a[i];
+    	den = a[r-1]-a[i-1];
+    	// debug(i);
+    	if( (r-1)<=i || den>u){continue;}
+    	// pt("kj");
+    	ok=1;
+    	// debug(i-1,i,r-1);
+    	cur = float(num)/float(den);
+    	ans = max(ans,cur);
+    }
+    cout<<fixed<<setprecision(21);
+    pt( (ok? ans:-1) );
 }
 
 

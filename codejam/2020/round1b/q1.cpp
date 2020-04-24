@@ -87,33 +87,56 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
-ll po2[60];
-string s,ans;
-ll X,Y,al;
-bool ok;
-void cal(ll x, ll y, ll l){
-	if(l > al ) return ;
-	if(x==X && Y==y){
-		ok = true;
-		if(l < al){
-			al = l;
-			ans = s.substr(0,l);
-		}
-
-		return;
+string s;
+ll X,Y;
+int cnt;
+void cal(ll x, ll y){
+	// if(cnt>32) return;
+	// cnt++;
+	// debug(x,y);
+	if(x==1 && y==0){
+		s+='E'; return;
 	}
-	s[l] = 'N';
-	cal(x , y+po2[l], l+1);
+	if(x==-1 && y==0){
+		s+='W'; return;
+	}
+	if(x==0 && y==1){
+		s+='N'; return;
+	}
+	if(x==0 && y==-1){
+		s+='S'; return;
+	}
+	if(x%2){
+		if(( (x-1)/2 + y/2) %2){
+			s+='E';
+			cal( (x-1)/2, y/2);
+		}else{
+			s+='W';
+			cal( (x+1)/2, y/2);
+		}	
+	}else{
+		if(( x/2 + (y-1)/2) %2){
+			s+='N';
+			cal( x/2, (y-1)/2);
+		}else{
+			s+='S';
+			cal( x/2, (y+1)/2);
+		}	
+	}
+}
 
-	s[l]='S';
-	cal(x , y-po2[l], l+1);
-	
-	s[l]='E';
-	cal(x + po2[l] , y, l+1);
-	
-	s[l]='W';
-	cal(x-po2[l] , y , l+1);
-
+void change(int sx, int sy){
+	int n = s.size();
+	loop(i,n){
+		if(sx){
+			if(s[i]=='E')s[i]='W';
+			else if(s[i]=='W')s[i]='E';
+		}
+		if(sy){
+			if(s[i]=='N')s[i]='S';
+			else if(s[i]=='S')s[i]='N';
+		}
+	}
 }
 
 int main(){
@@ -123,24 +146,26 @@ int main(){
 	#endif
     fast
     int T=1;
-    po2[0]=1;
-    loop1(i,59){
-    	po2[i] = 2*po2[i-1];
-    }
+    
     test{
 
         cin>>X>>Y;
         
-
         cout<< "Case #" << T++ << ": ";
-        
-		s="";
-		loop(i,35) s+='0';
-        ok = 0; al=32; ans="";
-        cal(0,0,0);
-        if(!ok){
+
+        int sx = X<0;
+        int sy = Y<0;
+        X = abs(X);
+        Y = abs(Y);
+        if((X+Y)%2==0){
         	pt("IMPOSSIBLE");
-        }else pt(ans);
+        	continue;
+        }
+
+        s = "";
+        cal(X,Y);
+        change(sx,sy);
+		cout<<s;
         
 
         cout<<"\n";

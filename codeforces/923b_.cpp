@@ -86,31 +86,19 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=2e5+5;
-ll m,n,k,t;
-ll a[lmt],ind[lmt],l[lmt],r[lmt],d[lmt];
+int const lmt=1e5+5;
+ll v[lmt],tt[lmt],pre[lmt];
+ll n,ans[lmt],res[lmt];
 
-bool cmp(int i, int j){
-    return l[i]<l[j];
-}
+ll bs(int i){
 
-bool check(ll val){
-	ll last=0,ans=0,idx;
-    loop(i,k){
-        idx = ind[i];
-        if(d[idx]<=val) continue;
-        
-        if(l[idx]<=last){
-            ans += max(0ll,r[idx]-last);
-            last = max(last,r[idx]);
-        }else{
-            ans += r[idx]-l[idx]+1;
-            last = r[idx];
-        }
-    }
-    ans = 2*ans + n+1;
-    return ans<=t;
-
+	ll lo=i, hi=n,mid;
+	while(lo<=hi){
+		mid = lo + (hi-lo)/2;
+		if(pre[mid]-pre[i-1]<= v[i])lo=mid+1;
+		else hi=mid-1;
+	} 
+	return hi;
 }
 
 int main(){
@@ -120,25 +108,43 @@ int main(){
 	#endif
     fast
 
-    cin>>m>>n>>k>>t;
-
-    loop(i,m) cin>>a[i];
-    sort(a,a+m);
-
-    loop(i,k){
-    	cin>>l[i]>>r[i]>>d[i];
-        ind[i]=i;
+    cin>>n;
+    loop1(i,n) cin>>v[i];
+    loop1(i,n){
+        v[i]+=tt[i-1];
+        cin>>tt[i];
+        tt[i]+=tt[i-1];
     }
-    sort(ind,ind+k,cmp);
-
-    ll lo=0,mid, hi=m-1;
-    while(lo<=hi){
-    	mid = lo + (hi-lo)/2;
-    	if(check(a[mid])) hi=mid-1;
-    	else lo = mid+1;
+    multiset<ll> mt;
+    // debug("kjsdk");
+    ll sum=0,re=0;
+    loop1(i,n){
+        re=0;
+        mt.insert(v[i]);
+        while(mt.size() &&  (*mt.begin())<=tt[i] ){
+            re += (*mt.begin())-tt[i-1];
+            mt.erase(mt.begin());
+        }
+        pts(re+mt.size()*(tt[i]-tt[i-1]));
     }
-    
-    pt(m-lo);
+    pt("");
+    // // pre[0]=tt[0];
+    // loop1(i,n) pre[i] = tt[i]+pre[i-1];
+
+    // loop1(i,n){
+    // 	ll end = bs(i);
+    //     // debug(i,end);
+    // 	res[end+1] += v[i]-(pre[end]-pre[i-1]);
+    // 	ans[i]++;
+    // 	ans[end+1]--;
+    // }
+    // loop1(i,n) ans[i] += ans[i-1];
+    // loop1(i,n){
+    // 	res[i]+=(ans[i]*tt[i]);
+    // 	pts(res[i]);
+    // }
+    // pt("");
+
 }
 
 

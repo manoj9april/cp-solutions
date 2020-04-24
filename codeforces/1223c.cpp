@@ -87,30 +87,33 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=2e5+5;
-ll m,n,k,t;
-ll a[lmt],ind[lmt],l[lmt],r[lmt],d[lmt];
+ll n, p[lmt], x,a, y, b, k;
 
-bool cmp(int i, int j){
-    return l[i]<l[j];
-}
-
-bool check(ll val){
-	ll last=0,ans=0,idx;
-    loop(i,k){
-        idx = ind[i];
-        if(d[idx]<=val) continue;
-        
-        if(l[idx]<=last){
-            ans += max(0ll,r[idx]-last);
-            last = max(last,r[idx]);
-        }else{
-            ans += r[idx]-l[idx]+1;
-            last = r[idx];
-        }
-    }
-    ans = 2*ans + n+1;
-    return ans<=t;
-
+bool check(ll mid){
+	ll con=0;
+	// ll ff=0,ss=0,tt=0,i=0;
+	
+	ll i=0,ff=(mid+1)*__gcd(a,b)/(a*b), ss = (mid+1)/a, tt = (mid+1)/b;
+	ss -= ff;
+	tt -= ff;
+	// loop1(j,mid+1){
+	// 	if(j%a==0 && j%b==0)ff++;
+	// 	else if(j%a==0)ss++;
+	// 	else if(j%b==0)tt++;
+	// }
+	while(i<ff){
+		con += (x+y)*p[i];
+		i++;
+	}
+	while(i<ff+ss){
+		con += (x)*p[i];
+		i++;
+	}
+	while(i<ff+ss+tt){
+		con += (y)*p[i];
+		i++;
+	}
+	return con>=k;
 }
 
 int main(){
@@ -120,25 +123,30 @@ int main(){
 	#endif
     fast
 
-    cin>>m>>n>>k>>t;
+    test{
+    	cin>>n;
+    	loop(i,n) {cin>>p[i]; p[i] /= 100;}
 
-    loop(i,m) cin>>a[i];
-    sort(a,a+m);
+    	cin>>x>>a;
+    	cin>>y>>b;
+    	cin>>k;
+    	if(y>x){
+			swap(a,b);
+			swap(x,y);
+		}
+    	sort(p,p+n);
+    	reverse(p,p+n);
 
-    loop(i,k){
-    	cin>>l[i]>>r[i]>>d[i];
-        ind[i]=i;
+    	ll lo=0, hi=n-1,mid;
+    	while(lo<=hi){
+    		mid = lo + (hi-lo)/2;
+
+    		if(check(mid))hi=mid-1;
+    		else lo = mid+1;
+    	}
+    	if(lo==n) lo=-2;
+    	pt(lo+1);
     }
-    sort(ind,ind+k,cmp);
-
-    ll lo=0,mid, hi=m-1;
-    while(lo<=hi){
-    	mid = lo + (hi-lo)/2;
-    	if(check(a[mid])) hi=mid-1;
-    	else lo = mid+1;
-    }
-    
-    pt(m-lo);
 }
 
 

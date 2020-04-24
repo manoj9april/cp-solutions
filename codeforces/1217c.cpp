@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define ll long long
+#define ll unsigned long long
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
 #define loop(i,n)  for(ll i=0; i<n; i++)
 #define loop1(i,n)  for(ll i=1; i<=n; i++)
@@ -86,31 +86,22 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=2e5+5;
-ll m,n,k,t;
-ll a[lmt],ind[lmt],l[lmt],r[lmt],d[lmt];
+int const lmt=3e5+5;
+int const LOGN=20;
 
-bool cmp(int i, int j){
-    return l[i]<l[j];
-}
-
-bool check(ll val){
-	ll last=0,ans=0,idx;
-    loop(i,k){
-        idx = ind[i];
-        if(d[idx]<=val) continue;
-        
-        if(l[idx]<=last){
-            ans += max(0ll,r[idx]-last);
-            last = max(last,r[idx]);
-        }else{
-            ans += r[idx]-l[idx]+1;
-            last = r[idx];
-        }
-    }
-    ans = 2*ans + n+1;
-    return ans<=t;
-
+string s;
+ll n;
+ll zeros;
+ll bs(ll i){
+	ll num=0,len=0,ans=0;
+	for(int j=0; j+i<n && j<20; j++){
+		num = 2*num + s[i+j]-'0';
+		len++;
+		// debug(len,zeros, num);
+		if(len+zeros>=num)ans++;
+	}
+	zeros=0;
+	return ans;
 }
 
 int main(){
@@ -120,25 +111,19 @@ int main(){
 	#endif
     fast
 
-    cin>>m>>n>>k>>t;
+    test{
+    	cin>>s;
+    	n = s.length();
+    	ll ans=0;
+    	zeros=0;
+		loop(i,n){
+			if(s[i]=='0')zeros++;
+			else ans += bs(i) ;
 
-    loop(i,m) cin>>a[i];
-    sort(a,a+m);
-
-    loop(i,k){
-    	cin>>l[i]>>r[i]>>d[i];
-        ind[i]=i;
+			// debug(i,ans);
+		}
+		pt(ans);    	
     }
-    sort(ind,ind+k,cmp);
-
-    ll lo=0,mid, hi=m-1;
-    while(lo<=hi){
-    	mid = lo + (hi-lo)/2;
-    	if(check(a[mid])) hi=mid-1;
-    	else lo = mid+1;
-    }
-    
-    pt(m-lo);
 }
 
 

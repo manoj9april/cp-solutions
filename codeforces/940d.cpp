@@ -86,31 +86,26 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=2e5+5;
-ll m,n,k,t;
-ll a[lmt],ind[lmt],l[lmt],r[lmt],d[lmt];
+int const lmt=1e5+5;
+ll n, a[lmt];
+string s;
 
-bool cmp(int i, int j){
-    return l[i]<l[j];
+ll get_max(int i){
+	ll mx = a[i];
+	loop(j,4){
+		i--;
+		mx = max(mx,a[i]);
+	}
+	return mx;
 }
 
-bool check(ll val){
-	ll last=0,ans=0,idx;
-    loop(i,k){
-        idx = ind[i];
-        if(d[idx]<=val) continue;
-        
-        if(l[idx]<=last){
-            ans += max(0ll,r[idx]-last);
-            last = max(last,r[idx]);
-        }else{
-            ans += r[idx]-l[idx]+1;
-            last = r[idx];
-        }
-    }
-    ans = 2*ans + n+1;
-    return ans<=t;
-
+ll get_min(int i){
+	ll mn = a[i];
+	loop(j,4){
+		i--;
+		mn = min(mn,a[i]);
+	}
+	return mn;
 }
 
 int main(){
@@ -120,25 +115,24 @@ int main(){
 	#endif
     fast
 
-    cin>>m>>n>>k>>t;
+    cin>>n;
+    loop(i,n) cin>>a[i];
+    cin>>s;
 
-    loop(i,m) cin>>a[i];
-    sort(a,a+m);
-
-    loop(i,k){
-    	cin>>l[i]>>r[i]>>d[i];
-        ind[i]=i;
+    ll mx,mn,l=-inf, r=inf;
+    for(int i=4; i<n; i++){
+    	if(s[i]==s[i-1]) continue;
+    	if(s[i]=='1'){
+    		mx = get_max(i);
+    		l = max(mx+1,l);
+    	}else{
+	    	mn = get_min(i);
+	    	r = min(mn-1,r);
+    	}
     }
-    sort(ind,ind+k,cmp);
 
-    ll lo=0,mid, hi=m-1;
-    while(lo<=hi){
-    	mid = lo + (hi-lo)/2;
-    	if(check(a[mid])) hi=mid-1;
-    	else lo = mid+1;
-    }
+    cout<<l<<" "<<r<<"\n";
     
-    pt(m-lo);
 }
 
 
