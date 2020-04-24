@@ -87,32 +87,8 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=2e5+5;
-ll m,n,k,t;
-ll a[lmt],ind[lmt],l[lmt],r[lmt],d[lmt];
-
-bool cmp(int i, int j){
-    return l[i]<l[j];
-}
-
-bool check(ll val){
-	ll last=0,ans=0,idx;
-    loop(i,k){
-        idx = ind[i];
-        if(d[idx]<=val) continue;
-        
-        if(l[idx]<=last){
-            ans += max(0ll,r[idx]-last);
-            last = max(last,r[idx]);
-        }else{
-            ans += r[idx]-l[idx]+1;
-            last = r[idx];
-        }
-    }
-    ans = 2*ans + n+1;
-    return ans<=t;
-
-}
-
+ll a[lmt],pre[lmt];
+ll n;
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
@@ -120,25 +96,27 @@ int main(){
 	#endif
     fast
 
-    cin>>m>>n>>k>>t;
+    test{
+    	ini(pre,0);
+    	ll k;
+    	cin>>n>>k;
+    	loop1(i,n)cin>>a[i];
+    	for(int i=2; i<=n-1; i++){
+    		if(a[i]>a[i-1] && a[i]>a[i+1]) pre[i]=1;
+    	}
+    	loop1(i,n)pre[i]+=pre[i-1];
 
-    loop(i,m) cin>>a[i];
-    sort(a,a+m);
-
-    loop(i,k){
-    	cin>>l[i]>>r[i]>>d[i];
-        ind[i]=i;
+    	ll ans=0;
+    	ll ix=0;
+    	for(int l=1; l+k-1<=n; l++){
+    		if(ans<pre[l+k-2]-pre[l]+1){
+    			ans=pre[l+k-2]-pre[l]+1;
+    			ix = l;
+    		}
+    	}
+    	pts(ans);
+    	pt(ix);
     }
-    sort(ind,ind+k,cmp);
-
-    ll lo=0,mid, hi=m-1;
-    while(lo<=hi){
-    	mid = lo + (hi-lo)/2;
-    	if(check(a[mid])) hi=mid-1;
-    	else lo = mid+1;
-    }
-    
-    pt(m-lo);
 }
 
 

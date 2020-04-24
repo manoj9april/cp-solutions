@@ -2,73 +2,158 @@
 
 using namespace std;
 
-/*******  All Required define Pre-Processors and typedef Constants *******/
-#define sci(t) scanf("%d",&t)
-#define scll(t) scanf("%lld",&t)
-#define scc(t) scanf("%c",&t)
-#define scs(t) scanf("%s",t)
-#define scf(t) scanf("%f",&t)
-#define sclf(t) scanf("%lf",&t)
+#define ll long long
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
-#define rep(idx, from, to, inc) for (int idx=from ; i<=to ; idx+=inc)
-#define loop(i,n) rep(i,0,n-1,1)
-#define rev_rep(idx, from, to, dec) for (int idx=from ; i>=to ; idx-=dec)
-#define rloop(i,n) rev_rep(i,n-1,0,1)
+#define loop(i,n)  for(ll i=0; i<n; i++)
+#define loop1(i,n)  for(ll i=1; i<=n; i++)
+
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
-#define dbg(x)  cerr << #x << " is " << x << endl;
+#define dbg(x)  cout << #x << " = " << x << endl
+#define pt(x) cout<<x<<"\n"
+#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
-#define f first
-#define s second
+#define F first
+#define S second
+
 
 #define inf (int)1e9
+#define infll 1e18
 #define eps 1e-9
 #define PI 3.1415926535897932384626433832795
 #define mod 1000000007
 
-#define fast    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
 
-const double pi=acos(-1.0);
+#define fast    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define test   int t; cin>>t; while(t--)
 
 typedef pair<int, int> pii;
-typedef pair<ll, ll> pll;
 typedef vector<int> vi;
 typedef vector<string> vs;
 typedef vector<pii> vpii;
 typedef vector<vi> vvi;
 typedef map<int,int> mii;
 typedef set<int> si;
-typedef multiset<int> mulsi;
-typedef unsigned long int uli;
-typedef long long int ll;
-typedef unsigned long long int  ull;
+
+typedef pair<ll, ll> pll;
+typedef vector<ll> vl;
+typedef vector<string> vs;
+typedef vector<pll> vpll;
+typedef vector<vl> vvl;
+typedef map<ll,ll> mll;
+typedef set<ll> sl;
+
+
+int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
+
+
+//===========================DEBUG======================//
+#define XOX 1
+vector<string> vec_splitter(string s) {
+    s += ',';
+    vector<string> res;
+    while(!s.empty()) {
+        res.push_back(s.substr(0, s.find(',')));
+        s = s.substr(s.find(',') + 1);
+    }
+    return res;
+}
+void debug_out(
+vector<string> __attribute__ ((unused)) args,
+__attribute__ ((unused)) int idx, 
+__attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
+template <typename Head, typename... Tail>
+void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
+    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+    stringstream ss; ss << H;
+    cerr << args[idx] << " = " << ss.str();
+    debug_out(args, idx + 1, LINE_NUM, T...);
+}
+#ifdef XOX
+#define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
+#else
+#define debug(...) 42
+#endif
+
+//================================================================//
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
-/*                                
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-*/                              
+//                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-
 int const lmt=2e5+5;
+ll l[lmt],r[lmt],pre[lmt];
+ll h,n;
 
-pll a[lmt];
+ll seg(ll k){
+    ll lo=0, hi=n-1, mid;
+    while(lo<=hi){
+        mid = lo + (hi-lo)/2;
+        // debug(mid,k,l[mid]);
+        if(k>l[mid]) lo = mid+1;
+        else hi=mid-1;
+    }
+    return hi;
+}
+
+ll geth(ll a, ll b){
+    ll bi = seg(b);
+    ll ai = seg(a);
+    ll ht;
+    ht = pre[bi]-pre[ai]-max(r[bi]-b,0ll);
+    // debug(ai,bi,ht,a,b);
+    return (b-a-ht);
+}
+
+ll bs(ll i){
+    ll lo=r[i],hi=infll,mid;
+    while(lo<=hi){
+        mid = lo + (hi-lo)/2;
+        if(geth(r[i], mid) < h)lo=mid+1;
+        else hi = mid-1;
+    }
+    return lo-l[i];
+}
 
 int main(){
+    #ifndef ONLINE_JUDGE
+    freopen("../input.txt", "r", stdin);
+    freopen("../output.txt", "w", stdout);
+    #endif
     fast
-    ll n,h;
 
+    cin>>n>>h;
+    
+    loop(i,n) cin>>l[i]>>r[i];
+    pre[0] = r[0]-l[0];
+    loop1(i,n-1) pre[i] = pre[i-1]+r[i]-l[i];
+
+    // debug(geth(4,19));
+    // for(int i=17; i<=17; i++){
+    //     pts(geth(7,i));
+    // }
+    // pt("");
+    ll cur,ans=0;
     loop(i,n){
-        cin>>a[i].f >>a[i].s;
+        cur = bs(i);
+        // debug(i,cur);
+        ans = max(ans,cur);
     }
-    a[n].f = 3e13+5; a[n].s = a[n].f+1;
 
-    int lt=0;
-    for(int i=0; i<n; i++){
-        while(diff + a[i+1].f-a[i].s <= h){
-            ans += a[i+1].s - a[i].s;
-            diff += a[i+1].f-a[i].s;
-        }
-    }
+    pt(ans);
 }
+
+
+/*
+
+
+
+*/
+
+
+

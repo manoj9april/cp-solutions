@@ -87,30 +87,19 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=2e5+5;
-ll m,n,k,t;
-ll a[lmt],ind[lmt],l[lmt],r[lmt],d[lmt];
+ll n,k;
+ll a[lmt],fre[lmt];
 
-bool cmp(int i, int j){
-    return l[i]<l[j];
+bool check(ll ncp){
+	ll cnt=0;
+	loop(i,lmt){
+		cnt += fre[i]/ncp;
+	}
+	return cnt>=k;
 }
 
-bool check(ll val){
-	ll last=0,ans=0,idx;
-    loop(i,k){
-        idx = ind[i];
-        if(d[idx]<=val) continue;
-        
-        if(l[idx]<=last){
-            ans += max(0ll,r[idx]-last);
-            last = max(last,r[idx]);
-        }else{
-            ans += r[idx]-l[idx]+1;
-            last = r[idx];
-        }
-    }
-    ans = 2*ans + n+1;
-    return ans<=t;
-
+bool cmp(int i, int j){
+	return fre[a[i]]<fre[a[j]];
 }
 
 int main(){
@@ -120,25 +109,34 @@ int main(){
 	#endif
     fast
 
-    cin>>m>>n>>k>>t;
-
-    loop(i,m) cin>>a[i];
-    sort(a,a+m);
-
-    loop(i,k){
-    	cin>>l[i]>>r[i]>>d[i];
-        ind[i]=i;
+    cin>>n>>k;
+    loop(i,n){
+    	cin>>a[i];
+    	fre[a[i]]++;
     }
-    sort(ind,ind+k,cmp);
+    sort(a,a+n, cmp);
+    reverse(a,a+n);
+    // loop(i,n)pts(a[i]);
+    // pt("");
 
-    ll lo=0,mid, hi=m-1;
+    ll lo=1, hi = n, mid;
     while(lo<=hi){
     	mid = lo + (hi-lo)/2;
-    	if(check(a[mid])) hi=mid-1;
-    	else lo = mid+1;
+
+    	if(check(mid))lo=mid+1;
+    	else hi=mid-1;
     }
-    
-    pt(m-lo);
+    int idx=0;
+    // debug(hi);
+    loop(i,lmt){
+    	if(!k)break;
+    	while(fre[i]/hi){
+    		if(!k)break;
+    		pts(i),k--;
+    		fre[i]-=hi;
+    	}
+    }
+    pt("");
 }
 
 

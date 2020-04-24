@@ -86,32 +86,8 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=2e5+5;
-ll m,n,k,t;
-ll a[lmt],ind[lmt],l[lmt],r[lmt],d[lmt];
-
-bool cmp(int i, int j){
-    return l[i]<l[j];
-}
-
-bool check(ll val){
-	ll last=0,ans=0,idx;
-    loop(i,k){
-        idx = ind[i];
-        if(d[idx]<=val) continue;
-        
-        if(l[idx]<=last){
-            ans += max(0ll,r[idx]-last);
-            last = max(last,r[idx]);
-        }else{
-            ans += r[idx]-l[idx]+1;
-            last = r[idx];
-        }
-    }
-    ans = 2*ans + n+1;
-    return ans<=t;
-
-}
+int const lmt=1e5+5;
+ll a[lmt],pos[lmt],vis[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -120,25 +96,34 @@ int main(){
 	#endif
     fast
 
-    cin>>m>>n>>k>>t;
+    test{
+    	ll n; cin>>n;
+    	// debug(t, n);
+    	ini(pos,0);
+    	ini(vis,0);
+    	loop1(i,n){
+    		cin>>a[i];
+    		pos[a[i]] = i;
+    	}
+    	int idx = pos[1], ok=1;
+    	vis[idx]=1;
+    	for(int i=2; i<=n; i++){
+    		idx++;
+    		if(idx>n || vis[idx]){
+    			idx=pos[i];
+    			vis[idx]=1;
+    			continue;
+    		}
+    		if(a[idx]!=i){
+    			// debug(idx,i);
+    			ok=0; break;
+    		}
+    		vis[idx]=1;
+    	}
 
-    loop(i,m) cin>>a[i];
-    sort(a,a+m);
-
-    loop(i,k){
-    	cin>>l[i]>>r[i]>>d[i];
-        ind[i]=i;
+    	
+    	pt((ok?"Yes":"No"));
     }
-    sort(ind,ind+k,cmp);
-
-    ll lo=0,mid, hi=m-1;
-    while(lo<=hi){
-    	mid = lo + (hi-lo)/2;
-    	if(check(a[mid])) hi=mid-1;
-    	else lo = mid+1;
-    }
-    
-    pt(m-lo);
 }
 
 
