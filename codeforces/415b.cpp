@@ -87,7 +87,18 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
+ll n,a,b,x;
 
+ll bs(ll amt){
+	ll val,lo=0, hi=x,mid;
+	while(lo<=hi){
+		mid = lo + (hi-lo)/2;
+		val = mid*a/b; 
+		if(val>=amt) hi = mid-1;
+		else lo = mid+1;
+	}
+	return lo;
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,8 +107,13 @@ int main(){
 	#endif
     fast
 
-    test{
-    	
+    
+    cin>>n>>a>>b;
+    loop(i,n){
+    	cin>>x;
+    	ll amt = x*a/b;
+
+    	pt(x - bs(amt));
     }
 }
 

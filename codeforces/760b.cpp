@@ -87,7 +87,21 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
+ll n,m,k;
 
+ll sum(ll h){
+	return (h*(h+1))/2;
+}
+
+bool check(ll mid){
+	ll ans = sum(mid) - sum(max(0ll,mid-k))+ max(0ll,k-mid);
+	// debug(ans);
+	ll kk = n-k;
+	mid--;
+	ans += sum(mid) - sum(max(0ll,mid-kk))+ max(0ll,kk-mid);
+	// debug(mid+1,ans,m);
+	return ans<=m;
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,9 +110,19 @@ int main(){
 	#endif
     fast
 
-    test{
-    	
+    cin>>n>>m>>k;
+
+    ll lo =1,hi=m-n+1, mid;
+
+    while(lo<=hi){
+    	mid =  lo + (hi-lo)/2;
+    	// debug(lo,hi,mid);
+    	if(check(mid))lo = mid+1;
+    	else {hi = mid-1;}
     }
+    // debug(lo,hi,mid);
+    // check(3);
+    pt(hi);
 }
 
 

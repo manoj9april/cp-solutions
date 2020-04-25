@@ -86,20 +86,8 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
-ll v[lmt],tt[lmt],pre[lmt];
-ll n,ans[lmt],res[lmt];
-
-ll bs(int i){
-
-	ll lo=i, hi=n-1,mid;
-	while(lo<=hi){
-		mid = lo + (hi-lo)/2;
-		if(pre[mid]-pre[i-1]<= v[i])lo=mid+1;
-		else hi=mid-1;
-	} 
-	return hi;
-}
+int const lmt=1e6+5;
+ll a[lmt],sum[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -108,26 +96,20 @@ int main(){
 	#endif
     fast
 
-    cin>>n;
-    loop1(i,n) cin>>v[i];
-    loop1(i,n) cin>>tt[i];
-
-    // pre[0]=tt[0];
-    loop1(i,n) pre[i] = tt[i]+pre[i-1];
+    ll n; cin>>n;
+    ll ans=0;
+    loop(i,n){
+    	cin>>a[i];	
+    	ans ^= a[i];
+    } 
+    // debug(ans);
+    loop1(i,lmt-2) sum[i] ^= i^sum[i-1];
 
     loop1(i,n){
-    	ll end = bs(i);
-    	res[end+1] = v[i]-(pre[end]-pre[i-1]);
-    	ans[i]++;
-    	ans[end+1]--;
+    	ans ^= (sum[i-1]*( (n/i)%2 ) ) ^ sum[n%i];
+    	// debug(ans);
     }
-    loop1(i,n) ans[i] += ans[i-1];
-    loop1(i,n){
-    	res[i]+=(ans[i]*tt[i]);
-    	pts(res[i]);
-    }
-    pt("");
-
+    pt(ans);
 }
 
 

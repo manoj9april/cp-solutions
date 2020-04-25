@@ -86,8 +86,8 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
-
+int const lmt=1e4+5;
+ll n,a[lmt], fre[lmt],T;
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,9 +96,19 @@ int main(){
 	#endif
     fast
 
-    test{
-    	
+
+    cin>>n;
+    loop(i,n) {cin>>a[i]; fre[a[i]]++;}
+    cin>>T;
+
+    ll cur=0,ans=0;
+    loop(i,T+1)cur+=fre[i];
+
+    for(int i=T+1; i<lmt; i++){
+    	ans = max(cur,ans);
+    	cur = cur - fre[i-T-1]+fre[i]; 
     }
+    pt(ans);
 }
 
 

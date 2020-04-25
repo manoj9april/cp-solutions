@@ -87,7 +87,17 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
+ll n,k;
+string s;
+ll fre[26];
 
+bool check(ll mid){
+	ll cnt=0;
+	loop(i,26){
+		cnt += (fre[i]+mid-1)/mid;
+	}
+	return cnt<=k;
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,9 +106,30 @@ int main(){
 	#endif
     fast
 
-    test{
-    	
+    cin>>s>>k;
+    n = s.length();
+    loop(i,n) fre[s[i]-'a']++;
+
+    ll lo=1, hi = n, mid;
+    while(lo<=hi){
+    	mid = lo + (hi-lo)/2;
+
+    	if(check(mid))hi = mid-1;
+    	else lo = mid+1;
     }
+    if(lo>n){
+    	pt(-1); return 0;
+    }
+    pt(lo);
+    ll cnt=0;
+    loop(i,26){
+    	int val = (fre[i]+lo-1)/lo;
+    	cnt+=val;
+
+    	while(val--)cout<<char('a'+i);
+    }
+
+    while(cnt<k){ cout<<s[0]; cnt++;}
 }
 
 

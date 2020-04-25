@@ -86,8 +86,35 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=2e5+5;
+ll m,n;
+ll cnt[lmt][26], qcnt[26];
+string s,qs;
 
+void mk(){
+	ini(qcnt,0);
+	int nn=qs.length();
+	loop(i,nn) qcnt[qs[i]-'a']++;
+}
+
+bool check(ll mid){
+	loop(j,26){
+		if(cnt[mid][j]< qcnt[j]) return 0;
+	}
+	return 1;
+}
+
+ll bs(){
+	ll lo=1, hi=n,mid;
+
+	while(lo<=hi){
+		mid = lo + (hi-lo)/2;
+		if(check(mid)) hi = mid-1;
+		else lo = mid+1;
+	}
+
+	return lo;
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,8 +123,19 @@ int main(){
 	#endif
     fast
 
-    test{
-    	
+    cin>>n;
+    cin>>s;
+
+    loop1(i,n){
+    	loop(j,26) cnt[i][j]=cnt[i-1][j];
+    	cnt[i][s[i-1]-'a']++;
+    }
+
+    cin>>m;
+    loop(i,m){
+    	cin>>qs;
+    	mk();
+    	pt(bs());
     }
 }
 

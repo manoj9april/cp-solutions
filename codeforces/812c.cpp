@@ -87,7 +87,17 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
+ll n,S,a[lmt],price[lmt];
 
+bool check(ll mid){
+	loop1(i,n){
+		price[i] = a[i] + i*mid;
+	}
+	sort(price+1, price+n+1);
+	ll sum=0;
+	loop1(i,mid) sum+= price[i];
+	return sum<=S;
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,9 +106,26 @@ int main(){
 	#endif
     fast
 
-    test{
-    	
+    cin>>n>>S;
+    loop1(i,n) cin >> a[i];
+
+    ll lo=1, hi = n, mid;
+    while(lo<=hi){
+    	mid = lo+(hi-lo)/2;
+
+    	if(check(mid)) lo=mid+1;
+    	else hi = mid-1;
     }
+
+    pts(hi);
+    mid=hi;
+    loop1(i,n){
+		price[i] = a[i] + i*mid;
+	}
+	sort(price+1, price+n+1);
+	ll sum=0;
+	loop1(i,mid) sum+= price[i];
+	pt(sum);
 }
 
 

@@ -87,7 +87,7 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
-
+ll a[lmt],b[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,12 +96,28 @@ int main(){
 	#endif
     fast
 
-    test{
-    	
+    ll n; cin>>n;
+    map<ll, int> fre;
+    set<ll>  st;
+    loop(i,n) {cin>>a[i]; fre[a[i]]++; }
+    loop(i,n) cin>>b[i];
+
+    ll ans=0;
+    loop(i,n)if(fre[a[i]]>1) ans += b[i], st.insert(a[i]);
+
+    loop(i,n){
+    	if(!exist(st,a[i])){
+    		for(ll x : st){
+    			if( (x|a[i]) == x ){
+    				ans += b[i]; break;
+    			}
+    		}
+    	}
     }
+
+
+    pt(ans);
 }
-
-
 /*
 
 

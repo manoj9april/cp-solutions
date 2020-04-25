@@ -50,7 +50,6 @@ int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
 int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 
-
 //===========================DEBUG======================//
 #define XOX 1
 vector<string> vec_splitter(string s) {
@@ -86,8 +85,8 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
-
+int const lmt=1e4+5;
+ll a[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,9 +95,31 @@ int main(){
 	#endif
     fast
 
-    test{
-    	
+    ll n; cin>>n;
+    a[0]=inf+1;
+    loop1(i,n) cin>>a[i];
+    mii fre;
+    ll ans=inf;
+    loop(i,n+1){
+    	if(fre[a[i]])break;
+    	fre[a[i]]++;
+    	int j=n;
+    	while(j>i){
+    		if(fre[a[j]]) break;
+
+    		fre[a[j]]++;
+    		j--;
+    	}
+    	ans = min(j-i,ans);
+    	// debug(i,j,ans);
+    	j++;
+    	while(j<=n){
+
+    		fre[a[j]]--;
+    		j++;
+    	}
     }
+    pt(ans);
 }
 
 
