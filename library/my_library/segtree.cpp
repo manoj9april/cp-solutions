@@ -2,10 +2,19 @@
 
 using namespace std;
 
-int const lmt = 1e5+1;
-int n,m;
-int a[lmt];
-int tree[4*lmt];
+int const lmt = 1e6+1;
+
+
+struct d{
+    int ans, open, close;
+}tree[4*lmt];
+
+
+d merge(d a, a b){
+    d c;
+
+    return c;
+}
 
 void build(int node,int start, int end){
     if(start==end){
@@ -15,7 +24,7 @@ void build(int node,int start, int end){
         build(2*node,start,mid);
         build(2*node +1, mid+1, end);
         
-        tree[node]=min(tree[2*node],tree[2*node+1]);
+        tree[node]=merge(tree[2*node],tree[2*node+1]);
     }
 }
 
@@ -32,7 +41,7 @@ void update(int node, int start, int end, int idx, int val){
             update(2*node +1,mid+1,end,idx,val);
         }
         
-        tree[node]=min(tree[2*node],tree[2*node+1]);
+        tree[node]=merge(tree[2*node],tree[2*node+1]);
     }
 }
 
@@ -42,9 +51,9 @@ int query(int node, int start, int end, int l, int r){
         return tree[node];
     }else{
         int mid = (start+end)/2;
-        int a =  query(2*node,start,mid,l,r);
-        int b =  query(2*node +1,mid+1,end,l,r);
-        return min(a,b);
+        auto a =  query(2*node,start,mid,l,r);
+        auto b =  query(2*node +1,mid+1,end,l,r);
+        return merge(a,b);
     }
 }
 
