@@ -23,7 +23,7 @@ using namespace std;
 #define infll 1e18
 #define eps 1e-9
 #define PI 3.1415926535897932384626433832795
-#define mod 998244353
+#define mod 1000000007
 
 
 #define fast    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
@@ -54,13 +54,13 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //===========================DEBUG======================//
 #define XOX 1
 vector<string> vec_splitter(string s) {
-    s += ',';
-    vector<string> res;
-    while(!s.empty()) {
-        res.push_back(s.substr(0, s.find(',')));
-        s = s.substr(s.find(',') + 1);
-    }
-    return res;
+	s += ',';
+	vector<string> res;
+	while(!s.empty()) {
+		res.push_back(s.substr(0, s.find(',')));
+		s = s.substr(s.find(',') + 1);
+	}
+	return res;
 }
 void debug_out(
 vector<string> __attribute__ ((unused)) args,
@@ -68,10 +68,10 @@ __attribute__ ((unused)) int idx,
 __attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
-    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
-    stringstream ss; ss << H;
-    cerr << args[idx] << " = " << ss.str();
-    debug_out(args, idx + 1, LINE_NUM, T...);
+	if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+	stringstream ss; ss << H;
+	cerr << args[idx] << " = " << ss.str();
+	debug_out(args, idx + 1, LINE_NUM, T...);
 }
 #ifdef XOX
 #define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
@@ -87,38 +87,36 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
-ll n,a[lmt],po2[lmt],mex[lmt];
+
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
-    po2[0]=1ll;
-    loop1(i,lmt) po2[i] = (po2[i-1]*2ll)%mod;
-    test{
-        cin>>n;
-        mii fre;
-        loop(i,n){
-            cin>>a[i];
-            fre[a[i]]++;
-        }
-        ll ans=0,sum=0,mul=1;
-        loop1(i,n+1){
-            sum += fre[i];
-            if(fre[i]){
-                ans = (ans + (i*((mul*po2[n-sum])%mod) )%mod )%mod;
-                // debug(i, i*mul*po2[n-sum]);
-            }else{
-                ans = (ans + (i*((mul*po2[n-sum])%mod) )%mod )%mod;
-                // debug(i, mul*po2[n-sum]);
 
-                break;
-            }
-            mul = (mul * (po2[fre[i]]-1+mod)%mod)%mod;
-        }
-        pt(ans%mod);
+    ll n; cin>>n;
+    string s; cin>>s;
+    for(int i=25; i>0; i--){
+    	if(n==1)break;
+    	if(s[0]==char('a'+i) && s[1]==char('a'+i-1)){
+			s.erase(s.begin());
+    		n--;
+    	}
+    	if(n==1)break;
+    	if(s[n-1]==char('a'+i) && s[n-2]==char('a'+i-1)){
+    		s.erase(s.begin()+n-1);
+    		n--;
+    	}
+
+    	loop1(j,n-2){
+    		if(n==1)break;
+    		if(s[j]==char('a'+i) && (s[j+1]==char('a'+i-1) || s[j-1]==char('a'+i-1)) ){
+    			s.erase(s.begin()+j);
+    			n--;
+    		}
+    	}
     }
 }
 

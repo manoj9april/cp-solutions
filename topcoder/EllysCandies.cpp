@@ -3,7 +3,6 @@
 using namespace std;
 
 #define ll long long
-#define ld long double
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
 #define loop(i,n)  for(ll i=0; i<n; i++)
 #define loop1(i,n)  for(ll i=1; i<=n; i++)
@@ -51,82 +50,32 @@ int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
 int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 
-
-//===========================DEBUG======================//
-#define XOX 1
-vector<string> vec_splitter(string s) {
-    s += ',';
-    vector<string> res;
-    while(!s.empty()) {
-        res.push_back(s.substr(0, s.find(',')));
-        s = s.substr(s.find(',') + 1);
-    }
-    return res;
-}
-void debug_out(
-vector<string> __attribute__ ((unused)) args,
-__attribute__ ((unused)) int idx, 
-__attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
-template <typename Head, typename... Tail>
-void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
-    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
-    stringstream ss; ss << H;
-    cerr << args[idx] << " = " << ss.str();
-    debug_out(args, idx + 1, LINE_NUM, T...);
-}
-#ifdef XOX
-#define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
-#else
-#define debug(...) 42
-#endif
-
-//================================================================//
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
 
+class EllysCandies {
+	public:
+	string getWinner(vector <int> boxes) {
+		ll n = boxes.size();
+		if(n%2){
+			return "Elly";
+		}else {
+			return "Kris";
+		}
+	}
+};
 
-
-
-int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-    #endif
-    fast
-    
-    ll n;
-    cin>>n;
-    ll a[n];
-    pll p[n+1];
-
-    loop1(i,n){
-        cin>>p[i].F;
-        p[i].S=i;
-    }
-    sort(p+1,p+n+1);
-    loop1(i,n){
-        pts(p[i].S);
-    }
-
-
-    
-
-   
-}
-
-
-
-/*
-
-
-
-*/
-
-
-
+// int main(){
+// 	#ifndef ONLINE_JUDGE
+// 	freopen("../input.txt", "r", stdin);
+// 	freopen("../output.txt", "w", stdout);
+// 	#endif
+	
+// 	EllysCandies solver;
+// 	vector <int> boxes;
+	
+// 	string ans = solver.getWinner(vector <int> boxes); 
+// }
