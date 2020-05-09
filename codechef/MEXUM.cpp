@@ -98,6 +98,7 @@ int main(){
     po2[0]=1ll;
     loop1(i,lmt) po2[i] = (po2[i-1]*2ll)%mod;
     test{
+<<<<<<< HEAD
         cin>>n;
         mii fre;
         loop(i,n){
@@ -119,6 +120,7 @@ int main(){
             mul = (mul * (po2[fre[i]]-1+mod)%mod)%mod;
         }
         pt(ans%mod);
+
     }
 }
 

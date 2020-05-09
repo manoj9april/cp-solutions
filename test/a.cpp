@@ -3,7 +3,6 @@
 using namespace std;
 
 #define ll long long
-#define ld long double
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
 #define loop(i,n)  for(ll i=0; i<n; i++)
 #define loop1(i,n)  for(ll i=1; i<=n; i++)
@@ -90,36 +89,17 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 int const lmt=1e5+5;
 
 
-
-
-
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
     #endif
     fast
-    
-    ll n;
-    cin>>n;
-    ll a[n];
-    pll p[n+1];
 
-    loop1(i,n){
-        cin>>p[i].F;
-        p[i].S=i;
+    test{
+        
     }
-    sort(p+1,p+n+1);
-    loop1(i,n){
-        pts(p[i].S);
-    }
-
-
-    
-
-   
 }
-
 
 
 /*

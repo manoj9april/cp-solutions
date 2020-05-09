@@ -97,7 +97,7 @@ int main(){
     int T=1;
     test{
 
-    	ll a,b; cin>>a>>b;
+    	
         
         cout<< "Case #" << T++ << ": ";
         

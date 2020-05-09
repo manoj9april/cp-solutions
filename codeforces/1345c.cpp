@@ -54,13 +54,13 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //===========================DEBUG======================//
 #define XOX 1
 vector<string> vec_splitter(string s) {
-    s += ',';
-    vector<string> res;
-    while(!s.empty()) {
-        res.push_back(s.substr(0, s.find(',')));
-        s = s.substr(s.find(',') + 1);
-    }
-    return res;
+	s += ',';
+	vector<string> res;
+	while(!s.empty()) {
+		res.push_back(s.substr(0, s.find(',')));
+		s = s.substr(s.find(',') + 1);
+	}
+	return res;
 }
 void debug_out(
 vector<string> __attribute__ ((unused)) args,
@@ -68,10 +68,10 @@ __attribute__ ((unused)) int idx,
 __attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
-    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
-    stringstream ss; ss << H;
-    cerr << args[idx] << " = " << ss.str();
-    debug_out(args, idx + 1, LINE_NUM, T...);
+	if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+	stringstream ss; ss << H;
+	cerr << args[idx] << " = " << ss.str();
+	debug_out(args, idx + 1, LINE_NUM, T...);
 }
 #ifdef XOX
 #define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
@@ -86,30 +86,39 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
-
-ll sum(ll n){
-    return (n*(n+1)/2 )%mod;
-}
+int const lmt=3e5+5;
+ll a[lmt],b[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-    #endif
+	#endif
     fast
 
     test{
-        ll n,k;
-        cin>>n>>k;
-        if(n==0){
-            pt( (2*sum(k-1))%mod );
-            continue;
-        }
-        ll ans = (2*sum(n-1) + n)%mod;
-        ll val = (k-1)/2;
-        ans = (ans + ((k/2)*2*n)%mod + 2*sum(val) )%mod;
-        pt(ans);
+    	ll n; cin>>n;
+    	loop(i,n) cin>>a[i];
+    	mii pos;
+    	ll mn = infll, mx = -infll;
+    	loop(i,n){
+    		ll npos = i + a[i%n];
+    		npos = ((npos%n)+n)%n;
+    		mn = min(mn,npos);
+    		mx = max(mx,npos);
+    		// pts(npos);
+    		pos[npos]=1;
+    	}
+    	// pt("");
+    	ll ok=1;
+    	if(mx-mn+1 != n){pt("NO"); continue;}
+    	for(ll i=mn; i<=mx; i++){
+    		if(!exist(pos,i)){
+    			ok=0; break;
+    		}
+    	}
+
+    	pt((ok?"YES":"NO"));
     }
 }
 
