@@ -12,6 +12,7 @@ using namespace std;
 #define dbg(x)  cout << #x << " = " << x << endl
 #define pt(x) cout<<x<<"\n"
 #define pts(x) cout<<x<<" "
+#define pti(x) cout<<x<<endl
 
 #define mp make_pair
 #define pb push_back
@@ -54,13 +55,13 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //===========================DEBUG======================//
 #define XOX 1
 vector<string> vec_splitter(string s) {
-    s += ',';
-    vector<string> res;
-    while(!s.empty()) {
-        res.push_back(s.substr(0, s.find(',')));
-        s = s.substr(s.find(',') + 1);
-    }
-    return res;
+	s += ',';
+	vector<string> res;
+	while(!s.empty()) {
+		res.push_back(s.substr(0, s.find(',')));
+		s = s.substr(s.find(',') + 1);
+	}
+	return res;
 }
 void debug_out(
 vector<string> __attribute__ ((unused)) args,
@@ -68,10 +69,10 @@ __attribute__ ((unused)) int idx,
 __attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
-    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
-    stringstream ss; ss << H;
-    cerr << args[idx] << " = " << ss.str();
-    debug_out(args, idx + 1, LINE_NUM, T...);
+	if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+	stringstream ss; ss << H;
+	cerr << args[idx] << " = " << ss.str();
+	debug_out(args, idx + 1, LINE_NUM, T...);
 }
 #ifdef XOX
 #define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
@@ -88,37 +89,27 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
-ll sum(ll n){
-    return (n*(n+1)/2 )%mod;
-}
-
 int main(){
     #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-    #endif
+    freopen("../../../input.txt", "r", stdin);
+    freopen("../../../output.txt", "w", stdout);
+	#endif
     fast
-
+    int T=1;
     test{
-        ll n,k;
-        cin>>n>>k;
-        if(n==0){
-            pt( (2*sum(k-1))%mod );
-            continue;
-        }
-        ll ans = (2*sum(n-1) + n)%mod;
-        ll val = (k-1)/2;
-        ans = (ans + ((k/2)*2*n)%mod + 2*sum(val) )%mod;
-        pt(ans);
+
+    	string s,ans=""; cin>>s;
+    	int n = s.length();
+    	ans += s[0];
+    	loop1(i,n-1){
+    		if(s[i]>=ans[0]) ans = s[i]+ans;
+    		else ans= ans + s[i];
+    	}
+        
+        cout<< "Case #" << T++ << ": ";
+        
+        pts(ans);
+
+        cout<<"\n";
     }
 }
-
-
-/*
-
-
-
-*/
-
-
-

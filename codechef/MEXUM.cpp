@@ -116,7 +116,7 @@ int main(){
 
     			break;
     		}
-    		mul = (mul * (po2[fre[i]]-1))%mod;
+    		mul = (mul * (po2[fre[i]]-1+mod))%mod;
     	}
     	pt(ans);
     }

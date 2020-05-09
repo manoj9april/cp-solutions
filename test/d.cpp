@@ -2,22 +2,25 @@
 
 using namespace std;
 
-#define ll long long
+#define ll int
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
 #define loop(i,n)  for(ll i=0; i<n; i++)
+#define loop1(i,n)  for(ll i=1; i<=n; i++)
 
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
-#define dbg(x)  cout << #x << " is " << x << endl;
-#define pt(x) cout<<x<<"\n";
+#define dbg(x)  cout << #x << " = " << x << endl
+#define pt(x) cout<<x<<"\n"
+#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
-#define f first
-#define s second
+#define F first
+#define S second
 
 
 #define inf (int)1e9
+#define infll 1e18
 #define eps 1e-9
 #define PI 3.1415926535897932384626433832795
 #define mod 1000000007
@@ -43,103 +46,89 @@ typedef map<ll,ll> mll;
 typedef set<ll> sl;
 
 
+int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
+
+
+//===========================DEBUG======================//
+#define XOX 1
+vector<string> vec_splitter(string s) {
+    s += ',';
+    vector<string> res;
+    while(!s.empty()) {
+        res.push_back(s.substr(0, s.find(',')));
+        s = s.substr(s.find(',') + 1);
+    }
+    return res;
+}
+void debug_out(
+vector<string> __attribute__ ((unused)) args,
+__attribute__ ((unused)) int idx, 
+__attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
+template <typename Head, typename... Tail>
+void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
+    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+    stringstream ss; ss << H;
+    cerr << args[idx] << " = " << ss.str();
+    debug_out(args, idx + 1, LINE_NUM, T...);
+}
+#ifdef XOX
+#define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
+#else
+#define debug(...) 42
+#endif
+
+//================================================================//
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
-
-string s,ff,ee;
-bool check(int i, int j){
-    for(; i<j; i++,j--){
-        if(s[i]!=s[j]) return false;
-    }
-    return true;
-}
-
-int kmp(string Z){
-    int n = (int) Z.length();
-
-    vector<int> F (n);
-
-     F[0]=0;
-
-    for (int i=1; i<n; ++i) {
-
-        int j = F[i-1];
-
-        while (j > 0 && Z[i] != Z[j])
-
-            j = F[j-1];
-
-        if (Z[i] == Z[j])  ++j;
-
-        F[i] = j;
-
-    }
-
-    return F[n-1];
-}
-
-string find_palin(string s, int val){
-    string r;
-    reverse(all(s)); r = s;
-    reverse(all(s));
-
-    ll ans_st=kmp(s+'#'+ r);
-    ll ans_en=kmp(r+'#'+s);
-    
-    reverse(all(s));
-    if(val){
-        return s.substr(0,ans_en);
-    }else{
-        reverse(all(s));
-        return s.substr(0,ans_st);
-    }
-
-}
-
+int const lmt=2e5+5;
+ll a[lmt];
+map<int, vi> pos;
 int main(){
-    
     #ifndef ONLINE_JUDGE
-    freopen("./input.txt", "r", stdin);
-    freopen("./output.txt", "w", stdout);
-	#endif
+    freopen("../input.txt", "r", stdin);
+    freopen("../output.txt", "w", stdout);
+    #endif
     fast
 
     test{
-        cin>>s;
-        string ns="";
-        int n = s.length();
-        if(check(0,n-1)){
-            cout<<s<<s<<"\n";
-            continue;
+        pos.clear();
+        ll n,ele; cin>>n;
+        loop1(i,n){
+            cin>>a[i];
+            pos[a[i]].pb(i);
         }
-        string s1,s2;
-        for(int i=0,j=n-1; i<j; i++,j--){
-            if(s[i]!=s[j]){
-                s1 = s.substr(i);
-                s2 = s.substr(0,j+1);
-                break;
+        ll last=-1;
+        int cnt=1;
+        for(auto it: pos){
+            // pts(it.F);
+            vi v = it.S;
+            sort(all(v));
+            auto ps = upper_bound(v.begin(), v.end(), last);
+            if(ps==v.end()){
+                cnt++;
+                // dbg(it.F);
+                last=v[0];
             }
-            ns += s[i];
+            else{
+                last = v[ int(ps-v.begin()) ];
+            }
         }
-        n = s.length();
-        // char st=s[0],en=s[n-1];
-        
-
-        
-        cout<<ns;
-        // cout<<"+";
-        s1 = find_palin(s1,0);
-        s2 = find_palin(s2,1);
-        if(s1.length() >= s2.length()){
-            cout<<s1;
-        }else{
-            cout<<s2;
-        }
-        reverse(all(ns));
-        // cout<<"+";
-        cout<<ns<<"\n";
+        pt(cnt);
     }
-    
 }
+
+
+/*
+
+
+
+*/
+
+
+
