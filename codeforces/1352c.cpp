@@ -87,7 +87,7 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
-
+ll a[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,11 +96,39 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	ll n; cin>>n;
+    	loop(i,n) cin>>a[i];
+    	ll al=0,bob=n-1,sa=0,ca=0,cb=0,sb=0;
+    	int flag=1,mv=0;
+    	while(al<=bob){
+    		if(flag){
+    			ca=0;
+    			while(al<=bob && ca<=cb){
+    				ca += a[al];
+    				al++;
+    			}
+    			sa += ca;
+    		}else{
+    			cb=0;
+    			while(al<=bob && cb<=ca){
+    				cb += a[bob];
+    				bob--;
+    			}
+    			sb += cb;
+    		}
+    		flag = 1-flag;
+    		mv++;
+    	}
+    	pts(mv);
+    	pts(sa);
+    	pt(sb);
+    }
 }
 
 
 /*
+
 
 
 */

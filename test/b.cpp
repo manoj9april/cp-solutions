@@ -87,7 +87,7 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
-
+ll a[lmt],b[lmt],take[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -95,15 +95,38 @@ int main(){
     freopen("../output.txt", "w", stdout);
 	#endif
     fast
-
-    test{
-    	
+    ll n,k; cin>>n>>k;
+    pii arr[n];
+    loop(i,n){
+    	cin>>arr[i].F;
+    	arr[i].S= i;
     }
+    sort(arr,arr+n);
+    reverse(arr,arr+n);
+    ll sum=0;
+    loop(i,k){
+    	sum+=arr[i].F;
+    	ll pos = arr[i].S;
+    	take[pos]=1;
+    }
+    pt(sum);
+    ll last=-1;
+    k--;
+    loop(i,n){
+    	if(!k)break;
+    	if(take[i]){
+    		pts(i-last);
+    		last = i;
+    		k--;
+    	}
+    }
+
+    pt(n-1-last);
 }
 
 
 /*
-
+https://docs.google.com/presentation/d/19ulDtAo-0zdanmJushZXJES7AmuTC0aCLdJNutzmbKE/edit#slide=id.g7411ae41b5_0_31
 
 
 */

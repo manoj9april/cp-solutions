@@ -90,17 +90,25 @@ int const lmt=1e5+5;
 
 
 int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-	#endif
+ //    #ifndef ONLINE_JUDGE
+ //    freopen("../../input.txt", "r", stdin);
+ //    freopen("../../output.txt", "w", stdout);
+	// #endif
     fast
 
-    
+    ll x; cin>>x;
+    ll cnt=0;
+    ll p=100;
+    while(p<x){
+    	p += p/100;
+    	cnt++;
+    }
+    pt(cnt);
 }
 
 
 /*
+
 
 
 */

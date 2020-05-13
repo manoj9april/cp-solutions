@@ -86,8 +86,12 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=2e5+5;
+ll a[lmt];
 
+bool sn(ll p){
+	return p>0;
+}
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,11 +100,31 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	ll n; cin>>n;
+    	loop(i,n) cin>>a[i];
+    	ll last=a[0];
+    	ll mx = a[0],sum=0;
+    	loop1(i,n-1){
+    		// dbg(mx);
+    		if(sn(last)==sn(a[i])){
+    			mx = max(mx,a[i]);
+    		}else{
+    			sum += mx;
+    			mx = a[i];
+    			// dbg(0);
+    		}
+    		last = a[i];
+    	}
+    	// dbg(mx);
+    	sum += mx;
+    	pt(sum);
+    }
 }
 
 
 /*
+
 
 
 */

@@ -5,19 +5,22 @@ using namespace std;
 #define ll long long
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
 #define loop(i,n)  for(ll i=0; i<n; i++)
+#define loop1(i,n)  for(ll i=1; i<=n; i++)
 
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
-#define dbg(x)  cout << #x << " is " << x << endl;
-#define pt(x) cout<<x<<"\n";
+#define dbg(x)  cout << #x << " = " << x << endl
+#define pt(x) cout<<x<<"\n"
+#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
-#define f first
-#define s second
+#define F first
+#define S second
 
 
 #define inf (int)1e9
+#define infll 1e18
 #define eps 1e-9
 #define PI 3.1415926535897932384626433832795
 #define mod 1000000007
@@ -43,106 +46,65 @@ typedef map<ll,ll> mll;
 typedef set<ll> sl;
 
 
-int const lmt = 1e5+1;
-int n,m;
-ll a[lmt],s[lmt],e[lmt], ptm[lmt], x[lmt],y[lmt];
-int tree[4*lmt];
-
-vpll ind;
-vector<int,pii> rtm;
+int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 
-void build(int node,int start, int end){
-    if(start==end){
-        tree[node]=a[start];
-    }else{
-        int mid = (start+end)/2;
-        build(2*node,start,mid);
-        build(2*node +1, mid+1, end);
-        
-        tree[node]=min(tree[2*node],tree[2*node+1]);
+
+//===========================DEBUG======================//
+#define XOX 1
+vector<string> vec_splitter(string s) {
+    s += ',';
+    vector<string> res;
+    while(!s.empty()) {
+        res.push_back(s.substr(0, s.find(',')));
+        s = s.substr(s.find(',') + 1);
     }
+    return res;
 }
-
-void update(int node, int start, int end, int idx, int val){
-    if(start==end){
-        // a[idx]=val;
-        tree[node]=val;
-    }
-    else{
-        int mid = (start+end)/2;
-        if(idx>=start  && idx<=mid){
-            update(2*node,start,mid,idx,val);
-        }else{
-            update(2*node +1,mid+1,end,idx,val);
-        }
-        
-        tree[node]=min(tree[2*node],tree[2*node+1]);
-    }
+void debug_out(
+vector<string> __attribute__ ((unused)) args,
+__attribute__ ((unused)) int idx, 
+__attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
+template <typename Head, typename... Tail>
+void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
+    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+    stringstream ss; ss << H;
+    cerr << args[idx] << " = " << ss.str();
+    debug_out(args, idx + 1, LINE_NUM, T...);
 }
+#ifdef XOX
+#define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
+#else
+#define debug(...) 42
+#endif
 
-int query(int node, int start, int end, int l, int r){
-    if(l>end || r<start) return INT_MAX;
-    else if(start>=l && end<=r){
-        return tree[node];
-    }else{
-        int mid = (start+end)/2;
-        int a =  query(2*node,start,mid,l,r);
-        int b =  query(2*node +1,mid+1,end,l,r);
-        return min(a,b);
-    }
-}
+//================================================================//
 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//                      main starts
+//////////////////////////////////////////////////////////////////////////////////////////
+int const lmt=1e5+5;
 
 
 int main(){
-    cin>>n;
-    for(int i=1; i<=n; i++){
-        cin>>s[i]>>e[i];
-        rtm.pb({s[i],0,i});
-        rtm.pb({e[i],1,i});
-        cin>>a[i];
-    }
-    sort(all(rtm));
-    cin>>m;
-    build(1,1,n);
-    for(int i=1; i<=m; i++){
-        cin>>ptm[i]>>x[i]>>y[i];
-        ind.pb({ptm[i],i});
+    #ifndef ONLINE_JUDGE
+    freopen("../input.txt", "r", stdin);
+    freopen("../output.txt", "w", stdout);
+    #endif
+    fast
 
-    }
-
-    sort(all(ind));
-
-    int idx=0,lidx;
-    ll ans[m+1];
-    for(int i=0; i<m; i++){
-        
-
-        int opidx = ind[i].s;
-        int oridx;
-
-        while(rtm[lidx].f < ptm[opidx]){
-            oridx = rtm[lidx].s.s;
-            int val = rtm[lidx].s.f;
-            if(val) break;
-            update(1, 1,n, oridx,1e10);
-            lidx++;
-        }
-
-        while(rtm[idx].f < ptm[opidx]){
-            oridx = rtm[idx].s.s;
-            int val = rtm[idx].s.f;
-            if(val) break;
-            update(1, 1,n, oridx,a[oridx]);
-        }
-        
-        
-        int res = query(1,1,n, max(1ll,x[opidx]-y[opidx]), min(n*1ll,x[opidx]+y[opidx]));
-        ans[oidx]=res;
-    }
-
-    for(int i=1; i<=m; i++) cout<<ans[i]<<"\n";
-
-
+    
 }
+
+
+/*
+https://docs.google.com/presentation/d/19ulDtAo-0zdanmJushZXJES7AmuTC0aCLdJNutzmbKE/edit#slide=id.g7411ae41b5_0_31
+
+
+*/
+
+
+

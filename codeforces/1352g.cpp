@@ -96,11 +96,28 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	ll n; cin>>n;
+    	if(n<4){
+    		pt(-1);
+    		continue;
+    	}
+    	for(int i=2; i<=n; i+=2)pts(i);
+    	if(n%2){
+    		pts(n-1-3); pts(n); pts(n-2);
+    		for(int i=n-6; i>0; i-=2)pts(i);
+    	}else{
+    		pts(n-3);
+    		pts(n-1);
+    		for(int i=n-5; i>0; i-=2)pts(i);
+    	}
+    	pt("");
+    }
 }
 
 
 /*
+
 
 
 */

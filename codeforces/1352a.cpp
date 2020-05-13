@@ -96,11 +96,26 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	ll n; cin>>n;
+    	ll mul=1;
+    	vi v;
+    	while(n){
+    		ll val = n%10;
+    		val *= mul;
+    		if(val)v.pb(val);
+    		n=n/10;
+    		mul *= 10;
+    	}
+    	pt(v.size());
+    	for(int x:v)pts(x);
+    	pt("");
+    }
 }
 
 
 /*
+
 
 
 */

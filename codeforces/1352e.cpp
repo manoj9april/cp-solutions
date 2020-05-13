@@ -86,8 +86,8 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
-
+int const lmt=1e4+5;
+int a[lmt],pp[lmt],fre[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -96,11 +96,37 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	ll n; cin>>n;
+    	unordered_map<int,int> mm;
+    	// mm[0]=1;
+    	int sum=0;
+    	ini(fre,0);
+    	pp[0]=0;
+    	loop1(i,n){
+    		cin>>a[i];
+    		fre[a[i]]++;
+    		mm[a[i]]=1;
+    		pp[i] = a[i]+pp[i-1];
+    	}
+    	int cnt=0;
+    	loop(i,n){
+    		for(int j=i+2; j<=n; j++){
+    			int val = pp[j]-pp[i];
+    			if(exist(mm,val)){
+    				cnt+=fre[val];
+    				mm.erase(val);
+    			}
+    		}
+    	}
+    	pt(cnt);
+    	
+    }
 }
 
 
 /*
+
 
 
 */

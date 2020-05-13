@@ -96,14 +96,19 @@ int main(){
     #endif
     fast
 
-    test{
-        
+    ll n; cin>>n;
+    loop(i,n){
+        ll ele;
+        cin>>ele;
+        if(ele%2==0)ele--;
+        pts(ele);
     }
+    pt("");
 }
 
 
 /*
-
+https://docs.google.com/presentation/d/19ulDtAo-0zdanmJushZXJES7AmuTC0aCLdJNutzmbKE/edit#slide=id.g7411ae41b5_0_31
 
 
 */

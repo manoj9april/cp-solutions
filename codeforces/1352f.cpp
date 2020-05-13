@@ -96,11 +96,44 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	ll n0,n1,n2; cin>>n0>>n1>>n2;
+    	string s = "";
+    	int cnt;
+    	if(n2){
+    		s+='1';
+    		cnt=0;
+    		while(cnt<n2){s+='1'; cnt++;}
+    	}
+    	if(n0){
+    		s+='0';
+    		cnt=0;
+    		while(cnt<n0){s+='0';cnt++;}	
+    	}
+    	if(n1){
+    		int flag=0;
+    		if(n0 && n2){
+    			n1--; flag=1;
+    		}
+    		else if(n0)flag=1;
+    		else if(n2)flag=0;
+    		else{
+    			s += '1';
+    		}
+    		cnt=0;
+    		while(cnt<n1){
+    			s += char('0'+flag);
+    			flag = 1-flag;
+    			cnt++;
+    		}
+    	}
+    	pt(s);
+    }
 }
 
 
 /*
+
 
 
 */

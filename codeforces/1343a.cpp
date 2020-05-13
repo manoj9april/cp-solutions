@@ -96,11 +96,22 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	ll n; cin>>n;
+    	ll k=2;
+    	ll a = 4;
+    	while(n%(a-1)){
+    		a *= 2;
+    		k++;
+    	}
+    	ll x = n/(a-1);
+    	pt(x);
+    }
 }
 
 
 /*
+
 
 
 */

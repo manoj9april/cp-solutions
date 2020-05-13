@@ -5,19 +5,22 @@ using namespace std;
 #define ll long long
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
 #define loop(i,n)  for(ll i=0; i<n; i++)
+#define loop1(i,n)  for(ll i=1; i<=n; i++)
 
 #define all(a)      (a).begin(),(a).end()
 #define exist(s,e)  (s.find(e)!=s.end())
-#define dbg(x)  cout << #x << " is " << x << endl;
-#define pt(x) cout<<x<<"\n";
+#define dbg(x)  cout << #x << " = " << x << endl
+#define pt(x) cout<<x<<"\n"
+#define pts(x) cout<<x<<" "
 
 #define mp make_pair
 #define pb push_back
-#define f first
-#define s second
+#define F first
+#define S second
 
 
 #define inf (int)1e9
+#define infll 1e18
 #define eps 1e-9
 #define PI 3.1415926535897932384626433832795
 #define mod 1000000007
@@ -43,95 +46,65 @@ typedef map<ll,ll> mll;
 typedef set<ll> sl;
 
 
+int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
+
+
+//===========================DEBUG======================//
+#define XOX 1
+vector<string> vec_splitter(string s) {
+    s += ',';
+    vector<string> res;
+    while(!s.empty()) {
+        res.push_back(s.substr(0, s.find(',')));
+        s = s.substr(s.find(',') + 1);
+    }
+    return res;
+}
+void debug_out(
+vector<string> __attribute__ ((unused)) args,
+__attribute__ ((unused)) int idx, 
+__attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
+template <typename Head, typename... Tail>
+void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
+    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+    stringstream ss; ss << H;
+    cerr << args[idx] << " = " << ss.str();
+    debug_out(args, idx + 1, LINE_NUM, T...);
+}
+#ifdef XOX
+#define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
+#else
+#define debug(...) 42
+#endif
+
+//================================================================//
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
-int spf[lmt];
-
-void cal(){
-    for(int i=0; i<lmt; i++)spf[i]=i;
-
-    for(ll i=2; i<lmt; i++){
-        if(spf[i]==i){
-            for(ll j=i*i; j<lmt; j+=i) spf[j]=i;
-        }
-    }
-}
-
-int cnt[lmt];
-
-bool check(int i){
-    while(spf[i] != 1){
-        if(cnt[spf[i]]) return false;
-        
-        while(spf[i]==spf[i/spf[i]]) i = i/spf[i];
-        i = i/spf[i];
-    }
-
-    return true;
-}
-
-void mark(int i){
-    while(spf[i] != 1){
-        cnt[spf[i]]++;
-        
-        while(spf[i]==spf[i/spf[i]]) i = i/spf[i];
-        i = i/spf[i];
-    }
-
-}
-
-void demark(int i){
-    while(spf[i] != 1){
-        cnt[spf[i]]--;
-        
-        while(spf[i]==spf[i/spf[i]]) i = i/spf[i];
-        i = i/spf[i];
-    }
-
-}
 
 int main(){
     #ifndef ONLINE_JUDGE
-    freopen("./input.txt", "r", stdin);
-    freopen("./output.txt", "w", stdout);
-	#endif
+    freopen("../input.txt", "r", stdin);
+    freopen("../output.txt", "w", stdout);
+    #endif
     fast
 
-    ll n; cin>>n;
-    ll a[n];
-    for(int i=0; i<n; i++)cin>>a[i];
-
-    cal();
-    int rt=0;
-    ll ans = 0;
-    for(int i=0; i<n; i++){
-        // dbg(i);
-
-        while(rt<n){
-            if(check(a[rt])){
-                // dbg(rt);
-                mark(a[rt]);
-                // dbg(i);
-                rt++;
-            }else break;
-        }
-        // if(i==0){
-        //     if(check(3)) cout<<"hhh\n";
-        // }
-        // dbg(rt-i);
-        ans += rt-i;
-
-        demark(a[i]);
-    }
-    cout<<ans<<"\n";
+    
 }
 
 
 /*
+https://docs.google.com/presentation/d/19ulDtAo-0zdanmJushZXJES7AmuTC0aCLdJNutzmbKE/edit#slide=id.g7411ae41b5_0_31
 
-// 
 
 */
+
+
+

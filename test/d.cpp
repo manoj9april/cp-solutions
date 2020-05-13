@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define ll int
+#define ll long long
 #define ini(arr, val) memset(arr, (val), sizeof(arr))
 #define loop(i,n)  for(ll i=0; i<n; i++)
 #define loop1(i,n)  for(ll i=1; i<=n; i++)
@@ -86,9 +86,9 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=2e5+5;
-ll a[lmt];
-map<int, vi> pos;
+int const lmt=1e5+5;
+
+
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
@@ -96,36 +96,33 @@ int main(){
     #endif
     fast
 
-    test{
-        pos.clear();
-        ll n,ele; cin>>n;
-        loop1(i,n){
-            cin>>a[i];
-            pos[a[i]].pb(i);
+    ll n; cin>>n;
+    string a,b; cin>>a>>b;
+    ll ans = a[n/2]!=b[n/2];
+    loop(i,n/2){
+        map<char,int> cc;
+        cc[a[i]]++;
+        cc[b[i]]++;
+        cc[a[n-1-i]]++;
+        cc[b[n-1-i]]++;
+        // debug(i,ans);
+        if(cc.size()==4){ans += 2; continue;}
+        else if(cc.size()==1)continue;
+        else if(cc.size()==3){ans += 1; ans += (a[i]==a[n-1-i]);continue;}
+        else for(auto p:cc){
+            // debug(i,p.F);
+
+            if(p.S!=2){ans +=1; break;}
         }
-        ll last=-1;
-        int cnt=1;
-        for(auto it: pos){
-            // pts(it.F);
-            vi v = it.S;
-            sort(all(v));
-            auto ps = upper_bound(v.begin(), v.end(), last);
-            if(ps==v.end()){
-                cnt++;
-                // dbg(it.F);
-                last=v[0];
-            }
-            else{
-                last = v[ int(ps-v.begin()) ];
-            }
-        }
-        pt(cnt);
+        
     }
+
+    pt(ans);
 }
 
 
 /*
-
+https://docs.google.com/presentation/d/19ulDtAo-0zdanmJushZXJES7AmuTC0aCLdJNutzmbKE/edit#slide=id.g7411ae41b5_0_31
 
 
 */

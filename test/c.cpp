@@ -86,11 +86,8 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
-
-ll sum(ll n){
-    return (n*(n+1)/2 )%mod;
-}
+int const lmt=2e5+5;
+ll a[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -99,23 +96,26 @@ int main(){
     #endif
     fast
 
-    test{
-        ll n,k;
-        cin>>n>>k;
-        if(n==0){
-            pt( (2*sum(k-1))%mod );
-            continue;
+    ll n; cin>>n;
+    loop(i,n)cin>>a[i];
+
+    ll ls=0,rs=0,r=n-1;
+    ll ans=0;
+    loop(i,n){
+        if(r<i)break;
+        while(r>=i && rs<ls){
+            rs += a[r];
+            r--;
         }
-        ll ans = (2*sum(n-1) + n)%mod;
-        ll val = (k-1)/2;
-        ans = (ans + ((k/2)*2*n)%mod + 2*sum(val) )%mod;
-        pt(ans);
+        if(rs==ls)ans = max(ans,ls);
+        ls += a[i];
     }
+    pt(ans);
 }
 
 
 /*
-
+https://docs.google.com/presentation/d/19ulDtAo-0zdanmJushZXJES7AmuTC0aCLdJNutzmbKE/edit#slide=id.g7411ae41b5_0_31
 
 
 */

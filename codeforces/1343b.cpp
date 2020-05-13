@@ -96,11 +96,27 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	ll n; cin>>n;
+    	n = n/2;
+    	if(n%2){
+    		pt("NO"); continue;
+    	}
+    	pt("YES");
+    	loop1(i,n){
+    		int val = i*2 + 2*(i>n/2);
+    		pts(val);
+    	}
+    	loop1(i,n){
+    		pts(i*2+1);
+    	}
+    	pt("");
+    }
 }
 
 
 /*
+
 
 
 */

@@ -88,7 +88,11 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 int const lmt=1e5+5;
 
-
+ll n,k; 
+bool check(ll mid){
+	ll val = mid - (mid/n);
+	return val >=k;
+}
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
@@ -96,11 +100,21 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	cin>>n>>k;
+    	ll lo=1, hi=infll,mid;
+    	while(lo<=hi){
+    		mid = lo + (hi-lo)/2;
+    		if(check(mid)) hi = mid-1;
+    		else lo = mid+1;
+    	}
+    	pt(lo);
+    }
 }
 
 
 /*
+
 
 
 */

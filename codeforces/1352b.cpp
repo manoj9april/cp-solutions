@@ -96,11 +96,43 @@ int main(){
 	#endif
     fast
 
-    
+    test{
+    	ll n,k; cin>>n>>k;
+    	if(k>n){
+    		pt("NO"); continue;
+    	}
+    	if(n%2){
+    		n -= (k-1);
+    		if(n%2==0){
+    			pt("NO"); continue;
+    		}
+    		pt("YES");
+    		loop(i,k-1)pts(1);
+    		pt(n);
+    	}else{
+    		if((n-(k-1))%2){
+    			pt("YES");
+	    		loop(i,k-1)pts(1);
+	    		pt(n-(k-1));
+	    		continue;
+    		}
+    		if(n<2*k){
+	    		pt("NO"); continue;
+	    	}
+	    	n -= 2*(k-1);
+    		if(n%2==1){
+    			pt("NO"); continue;
+    		}
+    		pt("YES");
+    		loop(i,k-1)pts(2);
+    		pt(n);
+    	}
+    }
 }
 
 
 /*
+
 
 
 */
