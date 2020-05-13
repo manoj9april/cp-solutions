@@ -50,63 +50,59 @@ int dirx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
 int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 
-
-//===========================DEBUG======================//
-#define XOX 1
-vector<string> vec_splitter(string s) {
-    s += ',';
-    vector<string> res;
-    while(!s.empty()) {
-        res.push_back(s.substr(0, s.find(',')));
-        s = s.substr(s.find(',') + 1);
-    }
-    return res;
-}
-void debug_out(
-vector<string> __attribute__ ((unused)) args,
-__attribute__ ((unused)) int idx, 
-__attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
-template <typename Head, typename... Tail>
-void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
-    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
-    stringstream ss; ss << H;
-    cerr << args[idx] << " = " << ss.str();
-    debug_out(args, idx + 1, LINE_NUM, T...);
-}
-#ifdef XOX
-#define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
-#else
-#define debug(...) 42
-#endif
-
-//================================================================//
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=1e8+5;
+vector<bool> prime(lmt, 1);
+int we[10];
+void sv(ll n){
+	for(ll i=2; i*i <= n; i++){
 
-
-int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("../input.txt", "r", stdin);
-    freopen("../output.txt", "w", stdout);
-    #endif
-    fast
-
-    test{
-        
-    }
+		if(prime[i]){
+			for(ll j=i*i; j<=n; j+=i)prime[j]=0;
+		}
+	}
 }
 
+bool check(ll n){
+	ini(we,0);
+	while(n){
+		ll val = n%10;
+		if(we[val])return 0;
+		we[val]=1;
+		n = n/10;
+	}
+	return 1;
+}
 
-/*
+class EllysWhatDidYouGet {
+	public:
+	int getCount(int N) {
+		ll val;
+		if(N<=2000000)val=N;
+		else val = 2000000;
+		sv(N+2*val);
+		loop(i,2*val){
+			if( (N-i)>1 && prime[N-i] && check(N-i)) return (N-i);
+			else if(prime[N+i] && check(N+i)) return (N+i);
+		}
 
+		return 2;
+	}
+};
 
+// int main(){
+// 	#ifndef ONLINE_JUDGE
+// 	freopen("../input.txt", "r", stdin);
+// 	freopen("../output.txt", "w", stdout);
+// 	#endif
+	
+// 	EllysWhatDidYouGet solver;
+// 	int N;
+// 	cin>>N;
+// 	int ans = solver.getCount(N); 
+// 	pt(ans);
 
-*/
-
-
-
+// 	// dbg(check(101));
+// }
