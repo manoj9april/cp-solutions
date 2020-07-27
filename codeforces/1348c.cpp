@@ -101,18 +101,22 @@ int main(){
     	string s; cin>>s;
     	sort(all(s));
     	string ans="";
-    	for(int i=0; i<n; i+=k){
-    		if(i+k-1>=n){
-    			ans += s[n-1];
-    		}
-    		else if(s[i+k-1]==s[i]){
-    			ans += s[i];
-    		}else{
-    			ans += s[i+k-1]; break;
-    		}
-    	}
-
-    	pt(ans);
+        char st = s[0];
+    	if(k==n || s[k-1]!=s[0]){
+            pt(s[k-1]); continue;
+        }
+        int ok=1;
+        st = s[k];
+        for(int i=k; i<n; i++)if(s[i]!=st){ok=0; break;}
+        if(ok){
+            for(int i=0; i<n; i+=k)cout<<s[i];
+            pt("");
+        }else{
+            cout<<s[0];
+            for(int i=k; i<n; i++)cout<<s[i];
+            pt("");
+        }
+    	
     }
 }
 

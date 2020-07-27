@@ -86,22 +86,53 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=2e5+5;
+int a[lmt];
 
 int main(){
     #ifndef ONLINE_JUDGE
-    freopen("../../../input.txt", "r", stdin);
-    freopen("../../../output.txt", "w", stdout);
+    freopen("../input.txt", "r", stdin);
+    freopen("../output.txt", "w", stdout);
 	#endif
     fast
-    int T=1;
+
     test{
+    	ll n; cin>>n;
 
-        
-        cout<< "Case #" << T++ << ": ";
-        
+    	ll sum=0;
+    	loop(i,n){
+    		cin>>a[i];
+    		if(i%2==0)sum+=a[i];
+    	}
 
-
-        cout<<"\n";
+    	vi e,o;
+    	for(int i=2; i<n; i+=2){
+    		e.pb(a[i-1]-a[i]);
+    	}
+    	for(int i=1; i<n; i+=2){
+    		o.pb(a[i]-a[i-1]);
+    	}
+    	ll ans=0, cur_m=0;
+    	loop(i,e.size()){
+    		cur_m = max(1ll*e[i], e[i]+cur_m);
+    		ans = max(ans,cur_m);
+    	}
+    	cur_m=0;
+    	loop(i,o.size()){
+    		cur_m = max(1ll*o[i], o[i]+cur_m);
+    		ans = max(ans,cur_m);
+    	}
+    	// debug(ans,sum);
+    	pt(ans+sum);
     }
+
 }
+
+
+/*
+
+
+*/
+
+
+

@@ -86,7 +86,7 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=2e5+5;
 
 
 int main(){
@@ -96,33 +96,11 @@ int main(){
     #endif
     fast
 
-    ll n; cin>>n;
-    string a,b; cin>>a>>b;
-    ll ans = a[n/2]!=b[n/2];
-    loop(i,n/2){
-        map<char,int> cc;
-        cc[a[i]]++;
-        cc[b[i]]++;
-        cc[a[n-1-i]]++;
-        cc[b[n-1-i]]++;
-        // debug(i,ans);
-        if(cc.size()==4){ans += 2; continue;}
-        else if(cc.size()==1)continue;
-        else if(cc.size()==3){ans += 1; ans += (a[i]==a[n-1-i]);continue;}
-        else for(auto p:cc){
-            // debug(i,p.F);
-
-            if(p.S!=2){ans +=1; break;}
-        }
-        
-    }
-
-    pt(ans);
+    
 }
 
 
 /*
-https://docs.google.com/presentation/d/19ulDtAo-0zdanmJushZXJES7AmuTC0aCLdJNutzmbKE/edit#slide=id.g7411ae41b5_0_31
 
 
 */

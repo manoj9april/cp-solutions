@@ -100,21 +100,22 @@ int main(){
     	ll n; cin>>n;
     	ll ans=0;
     	loop1(i,n)cin>>a[i];
-    	loop1(i,n){
-    		dp[i]=0;
-    		int cur = i;
-    		int idx = 1;
-    		while(cur>0){
-    			while(i%idx && i/idx){
-    				idx++;
-    			}
-    			cur = i/idx;
-    			if(!cur)break;
-    			if(a[cur]<a[i])dp[i] = max(dp[i],dp[cur]+1);
-    			
-    		}
-    		ans = max(ans,dp[i]);
-    	}
+    	
+        loop1(i,n){
+            dp[i]=1;
+            for(ll j=1; j*j<=i; j++){
+                if(i%j==0){
+                    if(a[j] < a[i]){
+                        dp[i] = max(dp[i],dp[j]+1);
+                    }
+                    ll nj = i/j;
+                    if(a[nj] < a[i]){
+                        dp[i] = max(dp[i],dp[nj]+1);
+                    }
+                }
+            }
+            ans = max(dp[i],ans);
+        }
 
     	pt(ans);
     }

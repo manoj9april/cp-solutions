@@ -54,13 +54,13 @@ int diry[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 //===========================DEBUG======================//
 #define XOX 1
 vector<string> vec_splitter(string s) {
-	s += ',';
-	vector<string> res;
-	while(!s.empty()) {
-		res.push_back(s.substr(0, s.find(',')));
-		s = s.substr(s.find(',') + 1);
-	}
-	return res;
+    s += ',';
+    vector<string> res;
+    while(!s.empty()) {
+        res.push_back(s.substr(0, s.find(',')));
+        s = s.substr(s.find(',') + 1);
+    }
+    return res;
 }
 void debug_out(
 vector<string> __attribute__ ((unused)) args,
@@ -68,10 +68,10 @@ __attribute__ ((unused)) int idx,
 __attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
-	if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
-	stringstream ss; ss << H;
-	cerr << args[idx] << " = " << ss.str();
-	debug_out(args, idx + 1, LINE_NUM, T...);
+    if(idx > 0) cerr << ", "; else cerr << "Line(" << LINE_NUM << ") ";
+    stringstream ss; ss << H;
+    cerr << args[idx] << " = " << ss.str();
+    debug_out(args, idx + 1, LINE_NUM, T...);
 }
 #ifdef XOX
 #define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
@@ -86,47 +86,56 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
-ll a[lmt],b[lmt],take[lmt];
+int const lmt=2e5+5;
+
 
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("../input.txt", "r", stdin);
     freopen("../output.txt", "w", stdout);
-	#endif
+    #endif
     fast
-    ll n,k; cin>>n>>k;
-    pii arr[n];
-    loop(i,n){
-    	cin>>arr[i].F;
-    	arr[i].S= i;
-    }
-    sort(arr,arr+n);
-    reverse(arr,arr+n);
-    ll sum=0;
-    loop(i,k){
-    	sum+=arr[i].F;
-    	ll pos = arr[i].S;
-    	take[pos]=1;
-    }
-    pt(sum);
-    ll last=-1;
-    k--;
-    loop(i,n){
-    	if(!k)break;
-    	if(take[i]){
-    		pts(i-last);
-    		last = i;
-    		k--;
-    	}
-    }
 
-    pt(n-1-last);
+    test{
+        ll n,k,l; cin>>n>>k>>l;
+        ll d[n];
+        ll ok=1;
+        loop(i,n){
+            cin>>d[i];
+            if(d[i]>l)ok=0;
+        }
+        if(!ok){
+            pt("===no"); continue;
+
+        }
+        loop(i,n){
+            if(d[i]+k<=l)continue;
+            else{
+                ll val = k-((d[i]+k)-l);
+                ll prev = val+1;
+                int cnt=1;
+                while(i<n){
+                    if(d[i]+k<=l){
+                        i--; break;
+                    }
+                    if(d[i]+val<=l)i++;
+                    else {ok=0; break;}
+                    val -= cnt;
+                    if(val==0)cnt=-1;
+                    else if(val==k)cnt=1;
+                }
+                if(!ok)break;
+            }
+            if(!ok)break;
+        }
+
+        if(ok)pt("yes");
+        else pt("no");
+    }
 }
 
 
 /*
-https://docs.google.com/presentation/d/19ulDtAo-0zdanmJushZXJES7AmuTC0aCLdJNutzmbKE/edit#slide=id.g7411ae41b5_0_31
 
 
 */

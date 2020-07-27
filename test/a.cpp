@@ -86,7 +86,7 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //                      main starts
 //////////////////////////////////////////////////////////////////////////////////////////
-int const lmt=1e5+5;
+int const lmt=2e5+5;
 
 
 int main(){
@@ -96,19 +96,42 @@ int main(){
     #endif
     fast
 
-    ll n; cin>>n;
-    loop(i,n){
-        ll ele;
-        cin>>ele;
-        if(ele%2==0)ele--;
-        pts(ele);
+    test{
+        ll n,k,l; cin>>n>>k>>l;
+        ll d[n];
+        ll ok=1;
+        loop(i,n){
+            cin>>d[i];
+            if(d[i]>l)ok=0;
+        }
+        if(!ok){
+            pt("No"); continue;
+
+        }
+        loop(i,n){
+            ll val = l-d[i];
+            if(val==0){
+                for(int j=0; i-j>=0 && j<=k; j++){
+                    if(d[i-j]+k<=l)break;
+                    if( (d[i-j]+j)>l){ok=0; break;}
+                }
+                if(!ok)break;
+                for(int j=0; i+j<n && j<=k; j++){
+                    if(d[i+j]+k<=l)break;
+                    if( (d[i+j]+j)>l){ok=0; break;}
+                }
+                if(!ok)break;
+            }
+
+        }
+
+        if(ok)pt("Yes");
+        else pt("No");
     }
-    pt("");
 }
 
 
 /*
-https://docs.google.com/presentation/d/19ulDtAo-0zdanmJushZXJES7AmuTC0aCLdJNutzmbKE/edit#slide=id.g7411ae41b5_0_31
 
 
 */

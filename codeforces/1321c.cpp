@@ -98,26 +98,26 @@ int main(){
 
     ll n; cin>>n;
     string s; cin>>s;
-    for(int i=25; i>0; i--){
-    	if(n==1)break;
-    	if(s[0]==char('a'+i) && s[1]==char('a'+i-1)){
-			s.erase(s.begin());
-    		n--;
-    	}
-    	if(n==1)break;
-    	if(s[n-1]==char('a'+i) && s[n-2]==char('a'+i-1)){
-    		s.erase(s.begin()+n-1);
-    		n--;
-    	}
-
-    	loop1(j,n-2){
-    		if(n==1)break;
-    		if(s[j]==char('a'+i) && (s[j+1]==char('a'+i-1) || s[j-1]==char('a'+i-1)) ){
-    			s.erase(s.begin()+j);
-    			n--;
-    		}
-    	}
+    int cnt=0;
+    int vis[n]={0};
+    char prev = '*', next = '*';
+    for(char ch='z'; ch>'a'; ch--){
+        for(int i=1; i<n; i++){
+            if(!vis[i] && s[i]==ch && s[i-1]==(ch-1)){
+                s[i]=char(ch-1); cnt++; debug("l",ch,i);
+                vis[i]=1;
+            }
+        }
+        for(int i=n-2; i>=0; i--){
+            if(!vis[i] && s[i]==ch && s[i+1]==(ch-1)){
+                s[i]=char(ch-1); cnt++; debug("r",ch,i);
+                vis[i]=1;
+            }
+        }
     }
+
+    pt(cnt);
+
 }
 
 
