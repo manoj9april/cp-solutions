@@ -95,8 +95,7 @@ int main(){
     freopen("../output.txt", "w", stdout);
 	#endif
     fast
-
-    
+	
 }
 
 
